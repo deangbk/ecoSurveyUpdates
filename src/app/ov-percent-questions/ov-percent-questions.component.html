@@ -1,0 +1,57 @@
+<h1>Scores on stacked chart by percentage - by dimensions</h1>
+<!-- <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title mb-0">Percentage Chart By Question </h4>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="chart-wrapper" class="col-lg-12">
+              <canvas id="percentageChart"> </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+<!-- <div class="row">
+  <div class="col-lg-12">
+    <div style="height: 1800px">
+      <app-template-chart-per
+        [title]="'Score by Percentage (Overview)'"
+        [labels]="c_labels_questDim"
+        [data]="this.dataDimensionQ"
+      >
+      </app-template-chart-per>
+    </div>
+  </div>
+</div> -->
+<!-- an example without the loop -->
+<!-- <div class="row" >
+    <div class="col-lg-12">
+      <div style="height: 900px">
+        <app-template-chart-per
+          [title]="'Score by Percentage (Overview)'"
+          [labels]="this.labelsTest" 
+          [data]="this.testData"
+        >
+        </app-template-chart-per>
+      </div>
+    </div>
+  </div> -->
+
+   <div class="row" *ngFor="let t of dataDimensionQ">
+    <div class="col-lg-12">
+      <div style="height: 900px">
+        <app-template-chart-per
+          [title]="'Score by Percentage '+t.name"
+          [labels]="t.labels" 
+          [data]="t.values"
+          [options]="opt"
+        >
+        </app-template-chart-per>
+      </div>
+    </div>
+  </div> 

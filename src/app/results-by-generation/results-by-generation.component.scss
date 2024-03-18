@@ -1,0 +1,34 @@
+
+.tab {
+	display:		inline-block;
+	margin-left: 	40px;
+}
+
+.linkdiv {
+	display:		block;
+	margin-bottom: 	3rem; 
+}
+.linkbtn {
+	margin-right: 	1rem; 
+}
+
+hr {
+	border : 0;
+  height: 1px;
+  width: 95%;
+  background-image: linear-gradient(to right, rgba(160, 160, 160, 0.2) , rgba(160, 160, 160, 0.5) 50%, rgba(160, 160, 160, 0.2));
+}
+
+.refresh-btn{
+	display: flex; 
+	justify-content: flex-end;
+}
+
+.fs-20{
+	font-size: 20px;
+}
+
+.cus-high{
+	height: 1675px;
+	
+}

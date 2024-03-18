@@ -1,0 +1,379 @@
+
+<h2>Response Results by Department</h2>
+<hr class="hr" />
+
+<app-department-selector [heading]="tree_Department_Text" [items]="tree_Department_Data"
+	[isDisabled]="!dataReady_DeptList"
+	(select)="onSelectDepartment($event)"></app-department-selector>
+
+<br><br>
+
+<section class="mt-5">
+	<ng-container *ngIf="dataReady_DeptData">
+		<h3>Results Summary: {{tree_Department_Text}}</h3>
+		<div class="row">
+			<div class="col-lg-12">
+				<r-circle-chart [top-display]="'Response Rate'" 
+					[data]="c_data_responseRate" [options]="c_opt_responseRate">
+			</r-circle-chart>
+			</div>
+		</div>
+		<div class="row" >
+			<div class="col-lg-6">
+				<r-bar-chart [top-display]="'Overall Score'" [data]="c_data_engagementScore"
+					[options]="c_opt_engagementScore">
+				</r-bar-chart>
+			</div>
+			
+			<div class="col-lg-6">
+				<rtemplate-chart-score-mode [title]="'Score by Mode'" [data]="c_data_scoreMode">
+				</rtemplate-chart-score-mode>
+			</div>
+		</div>
+
+		<div class="row" >
+			<div class="col-lg-5">
+				<h2>Dimension Data:</h2>
+				<div class="card" id="card-top">
+					<div class="card-body" id="card-top-body">
+						<h4>Average Score by Dimension</h4>
+		
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Type</th>
+									<th scope="col">Score</th>
+									
+								<!-- <th scope="col">Score Percentage</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Engagment score increase/decrease</td>
+									<td [ngStyle]="{'color': dimComparison.DifOverall < 0 ? 'red' : 'green'}">  <strong>{{this.dimComparison.DifOverall}}%</strong></td>
+								</tr>
+									<tr>						
+									
+									<td>Largest Increase: <strong>{{this.dimComparison.DimInceasedName}}</strong></td>
+										<td style="color:green">{{this.dimComparison.DimIncrease}}%</td>
+										<td></td>
+									</tr>
+									<tr *ngIf="this.dimComparison.DimDecrease<0">
+									<td>Largest Decrease: <strong>{{this.dimComparison.DimDecreaseName}}</strong></td>
+									<td style="color:red">{{this.dimComparison.DimDecrease}}%</td>
+									
+								</tr>
+									<tr>						
+									
+										<td>Response Rate: <strong>{{this.dimComparison.ResponseRate}}% </strong></td>
+										<td>{{this.dimComparison.ResponseTotal}} out of {{this.dimComparison.ResponsePotential}}</td>
+										
+									</tr>
+									<tr>
+										<td style="color:green">Highest Scoring Dimension: <strong>{{this.dimComparison.TopDim}} </strong></td>
+										<td style="color:green">{{this.dimComparison.TopScore}}%</td>
+										
+									</tr>
+									<tr>
+										<td style="color:red">Lowest Scoring Dimension: <strong>{{this.dimComparison.BotDim}} </strong></td>
+										<td style="color:red">{{this.dimComparison.BotScore}}%</td>
+									
+									</tr>
+									<tr>
+										<td><strong>Bottom 3 Dimensions</strong></td>
+									</tr>
+								<tr *ngFor="let item of this.dimComparison.BotDims; let i = index">
+									<td>{{i+1}}. {{item}}</td>
+									<td>{{this.dimComparison.BotScores[i]}}%</td>
+									<td></td>
+									</tr>
+									<tr>
+										<td><strong>Top 3 Dimensions</strong></td>
+									</tr>
+								<tr *ngFor="let item of this.dimComparison.TopDims; let i = index">
+									<td>{{i+1}}. {{item}}</td>
+									<td>{{this.dimComparison.TopScores[i]}}%</td>
+									<td></td>
+									</tr>
+							</tbody>
+						</table>
+						</div>
+						</div>
+			</div>
+			
+			<div class="col-lg-7">
+				<div class="card" id="card-top">
+					<div class="card-body" id="card-top-body">
+						<h4>Average Score by Dimension (Table)</h4>
+		
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Rank #</th>
+									<th scope="col">Dimension</th>
+									
+									<th scope="col">Score Percentage R2</th>
+									<th scope="col">Score R1</th>
+									<th>Difference</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ng-container *ngFor="let dt of this.combinedData let i = index">
+									<tr
+										[ngClass]="i == 0 ? 'table-success' : (i == this.combinedData.length - 1 ? 'table-danger' : '')">
+										<th scope="row">{{i + 1}}</th>
+										<td>{{dt.label}}</td>
+										<td>{{dt.data}}%</td>
+									<td>{{dt.dataYear}}%</td> 	
+										<td [ngStyle]="{'color': (dt.data-dt.dataYear) < 0 ? 'red' : 'green'}">{{dt.data-dt.dataYear |  number: '1.2-2' }}%</td>
+									</tr>
+								</ng-container>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<rtemplate-chart-verti-bars [title]="'Score by Role'" [size]="64"
+					[labels]="c_labels_scoreByRole" [data]="c_data_scoreByRole">
+				</rtemplate-chart-verti-bars>
+			</div>
+			<div class="col-lg-12">
+				<app-template-vert-grouped [title]="'Score by Role Comparison'" [size]="64"
+					[labels]="c_labels_scoreByRole" [data]="c_data_scorebyRoleOld">
+				</app-template-vert-grouped>
+			</div>
+			<div class="col-lg-12">
+				<rtemplate-chart-verti-bars [title]="'Score by Generation'" [size]="64"
+					[labels]="c_labels_scoreByAge" [data]="c_data_scoreByAge"
+					[colors]="c_color_generations">
+				</rtemplate-chart-verti-bars>
+			</div>
+			<div class="col-lg-12">
+				<app-template-vert-grouped  [title]="'Score by Generation Old Data'" [size]="64"
+					[labels]="c_labels_scoreByAge" [data]="c_data_scorebyAgeOld"
+					[colors]="c_color_generations">
+				</app-template-vert-grouped>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<rtemplate-chart-hori-bars [title]="'Score by Dimensions'"
+					[labels]="c_labels_dimensions" [data]="c_data_dimensions">
+				</rtemplate-chart-hori-bars>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<app-template-hori-test [title]="'Past Scores by Dimesions'"
+				[labels]="c_labels_dimensions" [data]="c_data_scorebyDeptDim" [horizontal]="true">
+				</app-template-hori-test>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<app-template-vert-grouped [title]="'Past Scores by Dimesions Vertical'"
+				[labels]="c_labels_dimensions" [data]="c_data_scorebyDeptDimVertical" [horizontal]="false">
+				</app-template-vert-grouped>
+			</div>
+		</div>
+		<h5>Score Modes by Dimensions</h5>
+		<div class="row">
+			<div class="col-lg-6" *ngFor="let data of c_data_dimensionScoreModes">
+				<rtemplate-chart-score-mode 
+					[title]="data.title" [data]="data.score">
+				</rtemplate-chart-score-mode>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card" id="card-top">
+					<div class="card-body" id="card-top-body">
+						<h4>Average Score by Dimension (Table)</h4>
+		
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Rank #</th>
+									<th scope="col">Dimension</th>
+									<th scope="col">Score</th>
+									<th scope="col">Score Percentage</th>
+									<th scope="col">Old Score</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ng-container *ngFor="let data of t_data_scoreDimension; let i = index">
+									<tr
+										[ngClass]="i == 0 ? 'table-success' : (i == t_data_scoreDimension.length - 1 ? 'table-danger' : '')">
+										<th scope="row">{{i + 1}}</th>
+										<td>{{data.name}}</td>
+										<td>{{data.score}}</td>
+										<td>{{data.scorep}}</td>
+										<!--<td>{{dataDimOld[i]["score"]}}</td> -->
+									</tr>
+								</ng-container>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card" id="card-top">
+					<div class="card-body" id="card-top-body">
+						<h4>Average Score by Dimension (Table)</h4>
+		
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Rank #</th>
+									<th scope="col">Dimension</th>
+									
+									<th scope="col">Score Percentage R2</th>
+									<th scope="col">Score R1</th>
+									<th>Difference</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ng-container *ngFor="let dt of this.combinedData let i = index">
+									<tr
+										[ngClass]="i == 0 ? 'table-success' : (i == this.combinedData.length - 1 ? 'table-danger' : '')">
+										<th scope="row">{{i + 1}}</th>
+										<td>{{dt.label}}</td>
+										<td>{{dt.data}}%</td>
+									<td>{{dt.dataYear}}%</td> 	
+										<td [ngStyle]="{'color': (dt.data-dt.dataYear) < 0 ? 'red' : 'green'}">{{dt.data-dt.dataYear |  number: '1.2-2' }}%</td>
+									</tr>
+								</ng-container>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+	
+	<br><br>
+	
+	<ng-container *ngIf="dataReady_SubDeptData">
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- <rtemplate-chart-hori-bars [title]="'Score by Sub Departments'" 
+					[labels]="c_labels_scorebySubDept" [data]="c_data_scorebySubDept">
+				</rtemplate-chart-hori-bars> -->
+				<r-bar-chart [top-display]="'Score by Sub Departments'" 
+					[data]="c_data_scorebySubDept" [options]="c_opt_scorebySubDept">
+				</r-bar-chart>
+			</div>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="dataReady_SubDeptData">
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- <rtemplate-chart-hori-bars [title]="'Score by Sub Departments'" 
+					[labels]="c_labels_scorebySubDept" [data]="c_data_scorebySubDept">
+				</rtemplate-chart-hori-bars> -->
+				<app-template-vert-grouped [top-display]="'Score by Sub Departments with old scores'" 
+					[data]="c_data_scorebySubDeptOld" [options]="c_opt_scorebySubDept">
+				</app-template-vert-grouped>
+			</div>
+		</div>
+	</ng-container>
+	
+	<ng-container *ngIf="dataReady_ResultByQuestion">
+		<h5>Score Breakdown by Question</h5>
+		<div class="row">
+			<div class="col-lg-12" style="height: 1700px">
+				<app-template-chart-hori-questions 
+					[title]="'Department Score by Question'" 
+					[labels]="c_labels_scoreByQuestion" [data]="c_data_scoreByQuestion" 
+					[size]="14">
+				</app-template-chart-hori-questions>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12" style="height: 1900px">
+				<rtemplate-chart-percent-bars 
+					[title]="'Department Percentage Score by Question'"
+					[labels]="c_labels_scorePercentageByQuestion" [data]="c_data_scorePercentageByQuestion" 
+					[size]="18">
+				</rtemplate-chart-percent-bars>
+			</div>
+		</div>
+		
+		<div class="row" *ngFor="let data of c_dataMap_scoreByQuestion_Dims">
+			<div class="col-lg-12" style="height: 560px">
+				<app-template-chart-hori-questions [cv-height]="440" [size]="14" 
+					[title]="data.dimName" 
+					[labels]="data.labels" [data]="data.qScores">
+				</app-template-chart-hori-questions>
+			</div>
+		</div>
+		<br>
+		<div class="row" *ngFor="let data of c_dataMap_scoreByQuestion_Dims">
+			<div class="col-lg-12" style="height: 600px">
+				<rtemplate-chart-percent-bars [cv-height]="500" [size]="24" 
+					[title]="data.dimName" 
+					[labels]="data.labels" [data]="data.qPercentages">
+				</rtemplate-chart-percent-bars>
+			</div>
+		</div>
+	</ng-container>
+</section>
+
+<br><br>
+
+<div *ngIf="selectedDepartmentId != null">
+	<h4>Select Generation</h4>
+	<div class="btn-group" dropdown [isDisabled]="!dataReady_Generations">
+		<button id="button-basic" dropdownToggle type="button" class="btn btn-success dropdown-toggle"
+			aria-controls="dropdown-animated">{{dropdown_Generations_Text}}</button>
+		
+		<ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+			<li role="menuitem" *ngFor="let item of dropdown_Generations_Items" (click)="onSelectGeneration(item)">
+				<a class="dropdown-item">{{item.name}}</a>
+			</li>
+		</ul>
+	</div>
+	
+	<section class="mt-5" *ngIf="dataReady_ByGeneration">
+		<div class="row">
+			<div class="col-lg-12">
+				<r-circle-chart [top-display]="'Response Rate by Generation'" 
+					[data]="c_data_rateByGenr" [options]="c_opt_rateByGenr">
+				</r-circle-chart>
+			</div>
+		</div>
+		<!-- <div class="row">
+			<div class="col-lg-12">
+				<r-bar-chart [top-display]="'Engagement Score by Generation'" 
+					[data]="c_data_scoreByGenr" [options]="c_opt_scoreByGenr">
+				</r-bar-chart>
+			</div>
+		</div> -->
+		<div class="row">
+			<div class="col-lg-12">
+				<rtemplate-chart-hori-bars [title]="'Generation Score by Dimensions'"
+					[labels]="c_labels_dimensionsByGenr" [data]="c_data_dimensionsByGenr">
+				</rtemplate-chart-hori-bars>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12" style="height: 1700px">
+				<app-template-chart-hori-questions 
+					[title]="'Generation Score by Question'" 
+					[labels]="c_labels_byQuestionByGenr" [data]="c_data_byQuestionByGenr" 
+					[size]="14">
+				</app-template-chart-hori-questions>
+			</div>
+		</div>
+	</section>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

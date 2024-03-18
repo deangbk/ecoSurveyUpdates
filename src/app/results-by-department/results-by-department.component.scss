@@ -1,0 +1,16 @@
+
+.linkdiv {
+	display:		block;
+	margin-bottom: 	2rem; 
+}
+
+hr {
+	border : 0;
+	height: 1px;
+	width: 95%;
+	background-image: linear-gradient(to right, 
+		rgba(160, 160, 160, 0.2), 
+		rgba(160, 160, 160, 0.5) 50%, 
+		rgba(160, 160, 160, 0.2)
+	);
+}

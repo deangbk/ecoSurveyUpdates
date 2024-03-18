@@ -1,0 +1,122 @@
+<div class="container ">
+	<div class="row">
+		<div class="col">
+			<h2>Results by Generations</h2>
+		</div>
+		<div class="col">
+			<div class="refresh-btn">
+				<button type="button" class="btn btn-success" (click)="onRefreshData()">
+					Refresh Data
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr class="hr" />
+<!--
+<div class="btn-group" dropdown [isDisabled]="!dataReady">
+	<button id="button-basic" dropdownToggle type="button" class="btn btn-success dropdown-toggle"
+		aria-controls="dropdown-animated" >{{dropdown_Generations_Text}}</button>
+	
+	<ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" 
+		aria-labelledby="button-animated">
+		<li role="menuitem" *ngFor="let item of dropdown_Dimensions_Items" (click)="onSelectDimension(item)">
+			<a class="dropdown-item">{{item.name}}</a>
+		</li>
+	</ul>
+</div>
+-->
+<ng-container *ngIf="surveyInfo != null">
+	<br>
+	<h4><span class="tab"></span>{{surveyInfo['project_name']}}</h4>
+	<h4><span class="tab"></span>{{surveyInfo['description']}}</h4>
+</ng-container>
+
+<section class="mt-5">
+	<div class="row">
+		<div class="col-lg-12">
+			<r-circle-chart [top-display]="'Response Rate'" [data]="response_Data" [options]="response_Opt" canvasHeight="80vh">
+			</r-circle-chart>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<r-circle-chart [top-display]="'Response Rate by Generation'" [data]="generationResponse_Data"
+				[options]="generationResponse_Opt" canvasHeight="80vh">
+			</r-circle-chart>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<r-bar-chart [top-display]="'Engagement Score by Generation'" [data]="generationEngagement_Data"
+				[options]="generationEngagement_Opt">
+			</r-bar-chart>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<app-template-vert-grouped [title]="'Score by Generation Comparison'" [size]="64"
+					[labels]="c_labels_scoreByGen" [data]="this.generationEngagement_DataOld">
+				</app-template-vert-grouped>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<r-bar-chart [top-display]="'Number of Employees by Generation'" [data]="YoSByGen_Data"
+				[options]="YoSByGen_Opt">
+			</r-bar-chart>
+		</div>
+	</div>
+<!--
+	<div class="col-lg-6">
+		<r-circle-chart [top-display]="'Years of Service Response Rate by Generation'" [data]="YoSResponse_Data"
+			[options]="YoSResponse_Opt">
+		</r-circle-chart>
+	</div>
+-->
+
+</section>
+<br />
+<div class="col fs-20"> Generation Select : 
+<div class="btn-group" dropdown [dropup]="dropdown_Generations_Text == ' none selected '" [isDisabled]="!dataReady_Selection">
+	<button id="button-basic" dropdownToggle type="button" class="btn btn-success dropdown-toggle"
+		aria-controls="dropdown-animated">{{dropdown_Generations_Text}}</button>
+
+	<ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+		<li role="menuitem" *ngFor="let item of dropdown_Generation_Items" (click)="onSelectGeneration(item)">
+			<a class="dropdown-item">{{item.name}}</a>
+		</li>
+	</ul>
+</div>
+</div>
+<br /><hr />
+<ng-container *ngIf="currentGeneration != null">
+	<div class="div-results">
+		<h3>Engagement Score Result of {{dropdown_Generations_Text}}</h3>
+		<section class="mt-5">
+			<div class="row">
+				<div class="col-lg-12">
+					<rtemplate-chart-hori-bars [title]="'Engagement Score by Dimension ('+ dropdown_Generations_Text+ ')' "
+						[labels]="dimension_labels" [data]="gen_data">
+					</rtemplate-chart-hori-bars>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-lg-12 cus-high">
+					<app-template-chart-hori-questions 
+						[title]="'Engagement Score by Question  ('+ dropdown_Generations_Text+ ')'" 
+						[labels]="scoreByQuestionLabels" [data]="questionScoreByGeneration" [size]="14">
+					</app-template-chart-hori-questions>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+	
+</ng-container>
+
+<br>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>surveyfe 2023</title>
+  <!-- <base href="https://surveyfe2023.azurewebsites.net/"> -->
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="node_modules/@coreui/coreui/dist/css/coreui.min.css">
+ 
+  </head>
+<body>
+  <app-root></app-root>
+  <!--
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  -->
+  
+  <script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById("Navbar").style.top = "0px";
+      } else {
+        document.getElementById("Navbar").style.top = "-58px";
+      }
+      prevScrollpos = currentScrollPos;
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+
+<div class="card" id="card-top">
+	<div class="card-body" id="card-top-body" [ngStyle]="canvasSize">
+		<h4>{{topDisplay}}</h4>
+		<hr />
+		<br>
+		<div class="chart-size">
+			<canvas #chCanvas height="{{canvasHeight}}">{{chart}}</canvas>
+		</div>
+		<div *ngIf="!isBottomEmpty()">
+			<br><h3>{{bottomDisplay}}</h3>
+		</div> 
+	 </div>
+</div>

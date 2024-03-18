@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'CarnacRegular';
+  src:  url("^../assets/fonts/CarnacRegular.woff") format("woff");
+  src: url("../assets/fonts/CarnacRegular.eot") format("embedded-opentype"), url("../assets/fonts/CarnacRegular.woff2") format("woff2"), url("../assets/fonts/CarnacRegular.ttf") format("truetype"), url("../assets/fonts/HoftypeCarnacRegular.svg#HoftypeCarnacRegular") format("svg");
+}
+
+@font-face {
+  font-family: 'CarnacBold';
+  src:  url("../assets/fonts/CarnacBold.woff") format("woff"); }
+
+@font-face {
+  font-family: 'CarnacLight';
+  src:  url("../assets/fonts/CarnacLight.woff") format("woff"); }
+
+
+.main {
+    width: 80%;
+    height: 100%;
+    min-height: 100vh;
+    margin: auto;
+    //top: -50px;
+    //margin-top: 3rem;
+    //background-color: rgb(175, 249, 192);
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-bottom: 3rem;
+    // margin-left: 1rem auto;
+    background-image: linear-gradient(to right, rgba(45, 255, 112, 0.6) , rgba(155, 251, 163, 0.6) 50%, rgba(45, 255, 112, 0.6));
+    border: 0px;
+    
+}
+
+main{
+  //background-color: rgb(232, 233, 240);
+  background-image: linear-gradient(to right, rgba(226, 249, 249, 0.6) , rgba(255, 255, 255, 0.5) 50%, rgba(226, 249, 249, 0.6));
+  height: 100%;
+  min-height: 100vh;
+  margin: auto;
+  //align-content: center;
+  //align-items: center;
+  //font-family: 'Lucida Sans Unicode';
+  font-family: 'CarnacRegular';
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  align-content: center;
+}
+
+.space{
+  padding-top: 6rem;
+}

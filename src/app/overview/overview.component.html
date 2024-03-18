@@ -1,0 +1,175 @@
+<div class="container ">
+	<div class="row">
+		<div class="col">
+			<h2>Response Overview</h2>
+		</div>
+		<div class="col">
+			<div class="refresh-btn">
+				<button type="button" class="btn btn-success" (click)="onRefreshData()">
+					Refresh Data
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<hr class="hr" />
+
+<ng-container *ngIf="surveyInfo != null">
+	<br>
+	<h4><span class="tab"></span>{{surveyInfo['project_name']}}</h4>
+	<h4><span class="tab"></span>{{surveyInfo['description']}}</h4>
+</ng-container>
+
+<section class="mt-5">
+	<div class="row">
+		<div class="col-lg-6 chart-size">
+			<r-circle-chart [top-display]="'Response Rate'" [data]="response_Data"
+				[options]="response_Opt">
+			</r-circle-chart>
+		</div>
+
+		<div class="col-lg-6">
+			<r-bar-chart [top-display]="'Engagement Score'" 
+				[data]="c_data_scoreAll" [options]="c_opt_scoreAll">
+			</r-bar-chart>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<rtemplate-chart-hori-bars [title]="'Engagement Score by Dimension'" 
+				[labels]="c_labels_scoreDimension" [data]="c_data_scoreDimension">
+			</rtemplate-chart-hori-bars>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card" id="card-top">
+				<div class="card-body" id="card-top-body">
+					<h4>Average Score by Dimension (Table)</h4>
+					
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" class="wi-15">Rank #</th>
+								<th scope="col" class="wi-45">Dimension</th>
+								<th scope="col" class="wi-20">Score</th>
+								<th scope="col" class="wi-20">Score Percentage</th>
+							</tr>
+						</thead>
+						<tbody>
+							<ng-container *ngFor="let data of t_data_scoreDimension; let i = index">
+								<tr [ngClass]="i == 0 ? 'table-success' : (i == t_data_scoreDimension.length - 1 ? 'table-danger' : '')">
+									<th scope="row">{{i + 1}}</th>
+									<td>{{data.name}}</td>
+									<td>{{data.score}}</td>
+									<td>{{data.scorep}}</td>
+								</tr>
+							</ng-container>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card" id="card-top">
+				<div class="card-body" id="card-top-body">
+					<h4>Average Score by Department (Table)</h4>
+	
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" class="wi-15">Rank #</th>
+								<th scope="col" class="wi-45">Department</th>
+								<th scope="col" class="wi-20">Score</th>
+								<th scope="col" class="wi-20">Score Percentage</th>
+							</tr>
+						</thead>
+						<tbody>
+							<ng-container *ngFor="let data of t_data_scoreDepartment; let i = index">
+								<tr
+									[ngClass]="i == 0 ? 'table-success' : (i == t_data_scoreDepartment.length - 1 ? 'table-danger' : '')">
+									<th scope="row">{{i + 1}}</th>
+									<td>{{data.name}}</td>
+									<td>{{data.score}}</td>
+									<td>{{data.scorep}}</td>
+								</tr>
+							</ng-container>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="mt-5" *ngIf="perQuestionData != null">
+	<h3>Score by Question</h3>
+	<div class="row">
+		<div class="col-lg-12" style="height: 1700px">
+			<app-template-chart-hori-questions 
+				[title]="'Score by Question'" 
+				[labels]="c_labels_scoreByQuestion" [data]="c_data_scoreByQuestion" [size]="14">
+			</app-template-chart-hori-questions>
+		</div>
+	</div>
+	<h3>Score Percentage Map by Question</h3>
+	<br>
+	<div class="row">
+		<div class="col-lg-12" style="height: 1900px">
+			<rtemplate-chart-percent-bars [size]="18"
+				[title]="'Percentage Score by Question'" 
+				[labels]="c_labels_scorePercentageByQuestion" 
+				[data]="c_data_scorePercentageByQuestion">
+			</rtemplate-chart-percent-bars>
+		</div>
+	</div>
+	
+	<h3>Score by Question per Dimension</h3>
+	<div class="row" *ngFor="let data of c_dataMap_scoreByQuestion_Dims">
+		<div class="col-lg-12" style="height: 560px">
+			<app-template-chart-hori-questions [cv-height]="440" [size]="14"
+				[title]="data.dimName" 
+				[labels]="data.labels" [data]="data.qScores">
+			</app-template-chart-hori-questions>
+		</div>
+	</div>
+	<h3>Score Percentage Map by Question per Dimension</h3>
+	<br>
+	<div class="row" *ngFor="let data of c_dataMap_scoreByQuestion_Dims">
+		<div class="col-lg-12" style="height: 600px">
+			<rtemplate-chart-percent-bars [cv-height]="500" [size]="24"
+				[title]="data.dimName" 
+				[labels]="data.labels" [data]="data.qPercentages">
+			</rtemplate-chart-percent-bars>
+		</div>
+	</div>
+</section>
+
+<section class="mt-5" *ngIf="dataReady_ResultRange_Age && dataReady_ResultRange_Year">
+	
+		<div class="col-lg-12">
+			<rtemplate-chart-hori-bars [title]="'Engagement Score by Age Range'" 
+				[labels]="c_labels_scoreByRangeAge" [data]="c_data_scoreByRangeAge" [size]="15">
+			</rtemplate-chart-hori-bars>
+		</div>
+		<div class="col-lg-12">
+			<rtemplate-chart-hori-bars [title]="'Engagement Score by Years of Service Range'" 
+				[labels]="c_labels_scoreByRangeYear" [data]="c_data_scoreByRangeYear" [size]="15">
+			</rtemplate-chart-hori-bars>
+		</div>
+	
+</section>
+
+
+<!--
+<div class="linkdiv">
+	<a [routerLink]="['./bydimension']" class="linkbtn"><button class="btn btn-success">Results by
+			Dimension</button></a>
+	<a [routerLink]="['./bydepartment']" class="linkbtn"><button class="btn btn-success">Results by
+			Department</button></a>
+</div>
+-->

@@ -1,0 +1,98 @@
+//$bg-color : rgb(143, 255, 154); rgb(80, 210, 57)
+$bg-color : '';
+$menu-item : 8;
+$sizeOfmenu : 75%;
+$marginOfmenu : (100% - $sizeOfmenu)/2;
+
+.Contain{
+    //height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+.custom-menubar{
+    //position: sticky;
+    //position: -webkit-sticky;
+    position: fixed;
+    display: flex;
+    margin-left: $marginOfmenu;
+    transition: top 0.3s;
+    top: 0px;
+    z-index: 1000;
+    width: $sizeOfmenu;
+    //margin: 0 auto;
+    background-color: $bg-color;
+    color: rgb(255, 255, 255);
+    //font-size: 24px;
+    border-radius: 0px 0px 15px 15px;
+    border: 0px;
+    border-top: 0px;
+    border-style: solid;
+    //border-color: $bg-color;
+    
+
+}
+
+
+a:link { text-decoration: none; 
+    
+}
+a:visited { text-decoration: none; 
+    
+}
+a:hover { text-decoration: none; 
+    //background-color: rgb(210, 255, 208);
+    cursor: pointer;
+   
+}
+a:active { text-decoration: none; 
+    
+}
+.left-menu{
+    border-radius: 0px 0px 0px 15px;
+}
+
+.right-menu{
+    border-radius: 0px 0px 15px 0px;
+}
+
+.middle-menu{
+    border-radius: 0px 0px 0px 0px;
+}
+
+.custom-menu-item {
+    height: 100%;
+    width: (100%/$menu-item);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    //margin-right: 10px;
+    //padding-top: 15px;
+    padding: 1rem;
+    font-size: 16px;
+    //font-family:'Courier New', Courier, monospace;
+    //font-weight: bolder;
+    text-align: center;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgb(255, 255, 255);
+}
+/*
+.custom-dropdown{
+    background-color: $bg-color;
+    width: 20%;
+    margin: 0 auto;
+    border: 1px;
+    border-style: solid;
+    border-color: darkgray;
+}
+
+.custom-dropdown-item{
+    width: 100%;
+    padding: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    //background-color: $bg-color;
+}*/

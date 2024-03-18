@@ -1,0 +1,142 @@
+<div class="container ">
+	<div class="row">
+		<div class="col">
+			<h2>Results by Roles</h2>
+		</div>
+		<div class="col">
+			<div class="refresh-btn">
+				<button type="button" class="btn btn-success" (click)="onRefreshData()">
+					Refresh Data
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<hr class="hr" />
+
+<ng-container *ngIf="surveyInfo != null">
+	<br>
+	<h4><span class="tab"></span>{{surveyInfo['project_name']}}</h4>
+	<h4><span class="tab"></span>{{surveyInfo['description']}}</h4>
+</ng-container>
+
+<!--
+<div class="btn-group" dropdown [isDisabled]="!dataReady">
+	<button id="button-basic" dropdownToggle type="button" class="btn btn-success dropdown-toggle"
+		aria-controls="dropdown-animated" >{{dropdown_roles_Text}}</button>
+	
+	<ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" 
+		aria-labelledby="button-animated">
+		<li role="menuitem" *ngFor="let item of dropdown_Dimensions_Items" (click)="onSelectDimension(item)">
+			<a class="dropdown-item">{{item.name}}</a>
+		</li>
+	</ul>
+</div>
+-->
+
+	<section class="mt-5" >
+		<div class="row">
+			<div class="col-lg-12">
+				<r-circle-chart [top-display]="'Response Rate'" [data]="response_Data" [options]="response_Opt" canvasHeight="80vh">
+				</r-circle-chart>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<r-circle-chart [top-display]="'Response Rate by Role'" [data]="roleResponse_Data"
+					[options]="roleResponse_Opt" canvasHeight="100vh">
+				</r-circle-chart>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<r-bar-chart [top-display]="'Engagement Score by Role'" [data]="roleEngagement_Data"
+					[options]="roleEngagement_Opt">
+				</r-bar-chart>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<app-template-vert-grouped [title]="'Engagement Score by Role Comparison'" [size]="64"
+						[labels]="c_labels_scoreByRole" [data]="this.roleEngagement_DataOld">
+					</app-template-vert-grouped>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<r-bar-chart [top-display]="'Number of Employees by Roles'" [data]="YoSByRole_Data"
+					[options]="YoSByRole_Opt">
+				</r-bar-chart>
+			</div>
+		</div>
+	<!--
+		<div class="row">
+			<div class="col-lg-6">
+				<rtemplate-chart-hori-bars [title]="'Engagement Score by Dimension (Boomer)'" [labels]="dimension_labels"
+					[data]="gen_data_boomer">
+				</rtemplate-chart-hori-bars>
+			</div>
+
+			<div class="col-lg-6">
+				<rtemplate-chart-hori-bars [title]="'Engagement Score by Dimension (Gen X)'" [labels]="dimension_labels"
+					[data]="gen_data_x">
+				</rtemplate-chart-hori-bars>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-lg-6">
+				<rtemplate-chart-hori-bars [title]="'Engagement Score by Dimension (Gen Y)'" [labels]="dimension_labels"
+					[data]="gen_data_y">
+				</rtemplate-chart-hori-bars>
+			</div>
+
+			<div class="col-lg-6">
+				<rtemplate-chart-hori-bars [title]="'Engagement Score by Dimension (Gen Z)'" [labels]="dimension_labels"
+					[data]="gen_data_z">
+				</rtemplate-chart-hori-bars>
+			</div>
+		</div>
+	-->
+	</section>
+
+	<div class="btn-group" dropdown [dropup]="dropdown_Roles_Text == ' none selected '" [isDisabled]="!dataReady_Selection">
+		<button id="button-basic" dropdownToggle type="button" class="btn btn-success dropdown-toggle"
+			aria-controls="dropdown-animated">{{dropdown_Roles_Text}}</button>
+
+		<ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+			<li role="menuitem" *ngFor="let item of dropdown_Role_Items" (click)="onSelectRole(item)">
+				<a class="dropdown-item">{{item.name}}</a>
+			</li>
+		</ul>
+	</div>
+	<br /><hr />
+	<ng-container *ngIf="currentRole != null">
+		<div class="div-results">
+			<h3>Result by Dimensions of {{dropdown_Roles_Text}}</h3>
+			<section class="mt-5">
+				<div class="row">
+					<div class="col-lg-12">
+						<rtemplate-chart-hori-bars [title]="'Engagement Score by Dimension ('+ dropdown_Roles_Text+ ')' "
+							[labels]="dimension_labels" [data]="role_data">
+						</rtemplate-chart-hori-bars>
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-lg-12 cus-high">
+						<app-template-chart-hori-questions 
+							[title]="'Engagement Score by Question  ('+ dropdown_Roles_Text+ ')'" 
+							[labels]="scoreByQuestionLabels" [data]="questionScoreByRole" [size]="14">
+						</app-template-chart-hori-questions>
+					</div>
+				</div>
+			</section>
+		</div>
+	</ng-container>
+
+
+
+<br>

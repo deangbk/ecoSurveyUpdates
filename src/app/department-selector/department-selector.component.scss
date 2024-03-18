@@ -1,0 +1,106 @@
+ul {
+	list-style: none;
+	margin: 0;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+ul li {
+	clear: both;
+	padding-left: 36px;
+	position: relative;
+	margin: 0;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+h4 {
+	display: inline;
+	font-size: 14px;
+	//color: rgb(25, 134, 244);
+	color: rgb(23, 23, 23);
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.caret {
+	width: 2%;
+}
+
+.scroll-box {
+	border: none;
+	height: 450px;
+	overflow: auto;
+}
+
+accordion-group {
+	::ng-deep {
+		div {
+			&> div.panel-heading.card-header.panel-enabled {
+				.btn-link {
+					color: dodgerblue;		// Accordion heading button style
+					font-size: 16px;
+				}
+			}
+		}
+	}
+}
+
+.custom-dropdown-1 {
+	background-color: rgb(255, 255, 255);
+	width: 99%;
+	padding: 0px 0px 15px 5px;
+}
+
+.custom-selection-1 {
+	background-color: rgb(158, 255, 158);
+	justify-content: space-between;
+	align-content: space-between;
+	width: 98%;
+	padding: 7px 2px 7px 15px;
+	border-radius: 3px;
+}
+
+.custom-selection-2 {
+	background-color: rgb(215, 247, 255);
+	justify-content: space-between;
+	align-content: space-between;
+	width: 96%;
+	padding: 5px 5px 5px 10px;
+	border-radius: 3px;
+}
+
+.custom-selection-3 {
+	background-color: rgb(222, 237, 255);
+	justify-content: space-between;
+	align-content: space-between;
+	width: 94%;
+	padding: 5px 5px 5px 10px;
+	border-radius: 3px;
+}
+
+.custom-selection-4 {
+	background-color: rgb(220, 221, 228);
+	
+	width: 92%;
+	padding: 2px 2px 2px 2px;
+	border-radius: 3px;
+}
+
+.link-blank-1{
+	width: 98%;
+}
+
+.link-blank-2{
+	width: 98%;
+}
+
+.link-blank-3{
+	width: 98%;
+}
+
+.link-blank-4{
+	width: 100%;
+}

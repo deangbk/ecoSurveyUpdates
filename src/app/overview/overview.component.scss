@@ -1,0 +1,56 @@
+
+.tab {
+	display:		inline-block;
+	margin-left: 	40px;
+}
+
+.linkdiv {
+	display:		block;
+	margin-bottom: 	3rem; 
+}
+.linkbtn {
+	margin-right: 	1rem; 
+}
+
+hr {
+	border : 0;
+  height: 1px;
+  width: 95%;
+  background-image: linear-gradient(to right, rgba(160, 160, 160, 0.2) , rgba(160, 160, 160, 0.5) 50%, rgba(160, 160, 160, 0.2));
+}
+
+.refresh-btn{
+	display: flex; 
+	justify-content: flex-end;
+}
+
+.chart-size{
+	position: relative;
+	//height: 30vh;
+	width: 100%;
+	height: 100%;
+}
+
+@for $wi from 1 through 100 {
+	.wi-#{$wi} {
+		width: #{$wi}+'%';
+	}
+}
+
+@for $hi from 1 through 100 {
+	.hi-#{$hi} {
+		height: #{$hi}+'%';
+	}
+}
+
+
+/*
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+$theme-colors: (
+	primary: rgb(152, 208, 92),
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";
+*/

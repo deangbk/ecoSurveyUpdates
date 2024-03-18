@@ -1,0 +1,58 @@
+
+<accordion [isAnimated]="true">
+	<accordion-group class="" heading="Department: {{heading}}" [isDisabled]="disabled" #categoryGroup>
+		<div class="scroll-box" >
+			<!-- Iterate top depts -->
+			<ul *ngFor="let item1 of treeItems" class="custom-dropdown-1">
+			<div class="custom-selection-1 row">
+				<span class="cursor-pointer caret" 
+					[ngClass]="item1.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+					(click)="item1.expand = !item1.expand"></span>
+				<div class="cursor-pointer link-blank-1" (click)="onClick(item1.id)">
+					<h4 >{{item1.name}}</h4>
+				</div>
+			</div>
+			<div *ngIf="item1.expand">
+				
+				<!-- Iterate sub depts -->
+				<li *ngFor="let item2 of item1.children" >
+					<div class="custom-selection-2 row">
+						<span class="cursor-pointer caret" 
+							[ngClass]="item2.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+							(click)="item2.expand = !item2.expand"></span>
+						<div class="cursor-pointer link-blank-2" (click)="onClick(item2.id)"> 
+							<h4>{{item2.name}}</h4>
+						</div>
+					</div>
+					<div *ngIf="item2.expand" >
+						
+						<!-- Iterate sub sub depts -->
+						<li *ngFor="let item3 of item2.children">
+							<div class="custom-selection-3 row">
+								<span class="cursor-pointer caret" 
+									[ngClass]="item3.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+									(click)="item3.expand = !item3.expand"></span>
+								<div class="cursor-pointer link-blank-3" (click)="onClick(item3.id)"> 
+									<h4>{{item3.name}}</h4>
+								</div>
+							</div>
+							<div *ngIf="item3.expand" >
+								
+								<!-- Iterate sub sub sub depts (please kill me already) -->
+								<li *ngFor="let item4 of item3.children">
+									<div class="custom-selection-4 row">
+										<div class="cursor-pointer link-blank-4" (click)="onClick(item4.id)">
+											<h4>&nbsp;&nbsp;&nbsp;&nbsp;{{item4.name}}</h4>
+										</div>
+									</div>
+								</li>
+								
+							</div>
+						</li>
+					</div>
+				</li>
+			</div>
+			</ul>
+		</div>
+	</accordion-group>
+</accordion>

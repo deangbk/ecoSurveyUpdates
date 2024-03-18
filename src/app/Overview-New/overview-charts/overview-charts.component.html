@@ -1,0 +1,159 @@
+
+<section class="mt-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title mb-0">Total Score By Percentage</h4>
+        </div>
+        <div class="card-body">
+          <div id="totalChart" class="col-lg-12">
+            <canvas id="totChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title mb-0">Average Score by dimension</h4>
+        </div>
+        <div class="card-body">
+          <div id="reChart" class="col-lg-12">
+            <canvas id="avgChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card-header">
+          <h4 class="card-title mb-0">Percentage Score by dimension</h4>
+        </div>
+        <div class="card-body">
+          <div id="resChart" class="col-lg-12">
+            <canvas id="perChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title mb-0">Mode Scores by Dimension</h4>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let data of avgDimChartData; let i = index" >
+            <h4 class="text-center">{{ DimensionNames[i] }}</h4>
+            <div class="card">
+              <div class="card-body">
+                <div class="chart-wrapper" class="col-lg-12">
+                  <canvas #avgDimChart></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+          </div>
+
+      </div>
+    </div>
+  </section>
+<!-- <section>
+  <div class="row">
+    <div class="col-lg-12">
+  <div class="card">
+ 
+
+    <div class="card-header">
+      <h4 class="card-title mb-0">Percentage Score by Department</h4>
+    </div>
+    <div class="card-body">
+      <div id="resChartDep" class="col-lg-12">
+        <canvas id="perChartDep"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>  -->
+
+<ng-container >
+
+  <div class="row">
+    <div class="col-lg-12">
+  <!--    <rtemplate-chart-hori-bars [title]="'Score by Sub Departments'" 
+        [labels]="c_labels_scorebySubDept" [data]="c_data_scorebySubDept">
+      </rtemplate-chart-hori-bars> -->
+     <r-bar-chart [top-display]="'Score by Top Level Departments'" 
+        [data]="c_data_scorebyDeptz" [options]="c_opt_scorebyDept1">
+      </r-bar-chart> 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+  <!--    <rtemplate-chart-hori-bars [title]="'Score by Sub Departments'" 
+        [labels]="c_labels_scorebySubDept" [data]="c_data_scorebySubDept">
+      </rtemplate-chart-hori-bars> -->
+     <r-bar-chart [top-display]="'Score by First Level Departments'" 
+        [data]="c_data_scorebyDept1" [options]="c_opt_scorebyDept1">
+      </r-bar-chart> 
+    </div>
+  </div>
+</ng-container>
+
+<ng-container >
+
+  <div class="row">
+    <div class="col-lg-12"  style="height: 1000px">
+      <app-template-chart-hori-questions [title]="'Score by Second Level Departments'" 
+      [labels]="this.depart2Labels" [data]="this.depart2Scores" [cv-height]="800">
+    </app-template-chart-hori-questions> 
+     <!-- <r-bar-chart [top-display]="'Score by Second Level Departments'" 
+        [data]="c_data_scorebyDept2" [options]="c_opt_scorebyDept1">
+      </r-bar-chart>  -->
+    </div>
+  </div>
+</ng-container>
+
+<ng-container >
+
+  <div class="row">
+    <div class="col-lg-12" style="height: 1800px">
+    <app-template-chart-hori-questions [title]="'Score by Third Level Departments'" 
+        [labels]="this.depart3Labels" [data]="this.depart3Scores" >
+      </app-template-chart-hori-questions> 
+     <!-- <r-bar-chart [top-display]="'Score by Third Level Departments'" 
+        [data]="c_data_scorebyDept3" [options]="c_opt_scorebyDept1">
+      </r-bar-chart>  -->
+    </div>
+  </div>
+</ng-container>
+
+<!-- <section class="mt-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title mb-0">Mode Scores by Department</h4>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let data of avgDepChartData; let i = index" >
+            <h4 class="text-center">{{ avgDepartmentLabels[i] }}</h4>
+            <div class="card">
+              <div class="card-body">
+                <div class="chart-wrapper" class="col-lg-12">
+                  <canvas #avgDepChart></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+          </div>
+
+      </div>
+    </div>
+  </section> -->

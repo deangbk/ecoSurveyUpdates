@@ -1,0 +1,142 @@
+
+<!--
+<div class="linkdiv">
+	<a [routerLink]="['../']">
+		<button class="btn btn-success">Back to Overview</button>
+	</a>
+</div>
+-->
+
+<h2>Results by Dimensions</h2>
+<hr class="hr" />
+
+<div class="btn-group" dropdown [isDisabled]="!dataReady_DimInfo">
+	<button id="button-basic" dropdownToggle type="button" class="btn btn-success dropdown-toggle"
+		aria-controls="dropdown-animated" >{{dropdown_Dimensions_Text}}</button>
+	
+	<ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" 
+		aria-labelledby="button-animated">
+		<li role="menuitem" *ngFor="let item of dropdown_Dimensions_Items" (click)="onSelectDimension(item)">
+			<a class="dropdown-item">{{item.name}}</a>
+		</li>
+	</ul>
+</div>
+
+<br><br><br><br>
+
+<ng-container *ngIf="currentDimension != null">
+	<div class="div-results">
+		<h3>Results Summary: {{dropdown_Dimensions_Text}}</h3>
+		
+		<section class="mt-5">
+			<div class="row">
+				<div class="col-lg-6">
+					<r-bar-chart [top-display]="'Overall Score'" 
+						[data]="c_data_engagementScore" [options]="c_opt_engagementScore">
+					</r-bar-chart>
+				</div>
+				
+				<div class="col-lg-6">
+					<rtemplate-chart-score-mode [title]="'Score by Mode'" [data]="c_data_scoreMode">
+					</rtemplate-chart-score-mode>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-6">
+					<rtemplate-chart-hori-bars [title]="'Score by Role'" 
+						[labels]="c_labels_scoreByRole" [data]="c_data_scoreByRole">
+					</rtemplate-chart-hori-bars>
+				</div>
+				
+				<div class="col-lg-6">
+					<rtemplate-chart-hori-bars [title]="'Score by Age (Generation)'" 
+						[labels]="c_labels_scoreByAge" [data]="c_data_scoreByAge">
+					</rtemplate-chart-hori-bars>
+				</div>
+			</div>
+		</section>
+			
+		<section class="mt-5" *ngIf="dataResultByQuestion != null">
+			<div class="row">
+				<div class="col-lg-12" style="height: 600px">
+					<app-template-chart-hori-questions [title]="'Score by Question'" [labels]="c_labels_scoreByQuestion"
+						[data]="c_data_scoreByQuestion" 
+						 [cv-height]="500">
+					</app-template-chart-hori-questions>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-12" style="height: 600px">
+					<rtemplate-chart-percent-bars [title]="'Percentage Score by Question'"
+						[labels]="c_labels_scorePercentageByQuestion" [data]="c_data_scorePercentageByQuestion"
+						 [cv-height]="500">
+					</rtemplate-chart-percent-bars>
+				</div>
+			</div>
+		</section>
+		
+		<section class="mt-5">
+			<div class="row">
+				<div class="col-lg-12">
+					<rtemplate-chart-hori-bars [title]="'Score by Departments (Overview)'" 
+						 [labels]="c_labels_deptsOverview" [data]="c_data_deptsOverview">
+					</rtemplate-chart-hori-bars>
+				</div>
+			</div>
+			
+			<br>
+			<div class="row" *ngIf="tree_Department_Data != null">
+				<div class="col-lg-12">
+					<h4>Score by Department</h4>
+					<app-department-selector [heading]="dropdown_Department_Text" 
+						[items]="tree_Department_Data" (select)="onSelectDepartment($event)"></app-department-selector>
+				</div>
+			</div>
+			
+			<ng-container *ngIf="selectedDepartmentData != null">
+				<div class="row">
+					<div class="col-lg-6">
+						<r-circle-chart [top-display]="'Response Rate'" [outlabel]="false"
+							[data]="c_data_dept_rate" [options]="c_opt_dept_rate">
+						</r-circle-chart>
+					</div>
+					<div class="col-lg-6">
+						<r-bar-chart [top-display]="'Overall Department Score'" 
+							[data]="c_data_dept_score" [options]="c_opt_dept_score">
+						</r-bar-chart>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<rtemplate-chart-score-mode [title]="'Department Score by Mode'" 
+							[data]="c_data_dept_scoreMode">
+						</rtemplate-chart-score-mode>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-12" style="height: 600px">
+						<app-template-chart-hori-questions 
+							[title]="'Department Score by Question'" 
+							[labels]="c_labels_scoreByQuestionDept" [data]="c_data_scoreByQuestionDept" 
+							 [cv-height]="500">
+						</app-template-chart-hori-questions>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12" style="height: 600px">
+						<rtemplate-chart-percent-bars 
+							[title]="'Department Percentage Score by Question'"
+							[labels]="c_labels_scorePercentageByQuestionDept" [data]="c_data_scorePercentageByQuestionDept" 
+							 [cv-height]="500">
+						</rtemplate-chart-percent-bars>
+					</div>
+				</div>
+			</ng-container>
+		</section>
+	</div>
+</ng-container>
+
+<br><br><br>

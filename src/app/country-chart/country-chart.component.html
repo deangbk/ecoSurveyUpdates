@@ -1,0 +1,231 @@
+<div>
+  <input type="button" value="CAPTURE" (click)="captureScreen()" />
+</div>
+<div id="contentToConvert">
+  <h2>Summary: Overall Quantitative Results for {{CountryName}}</h2>
+
+  <section class="mt-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Average Scores by Department</h4>
+          </div>
+          <div class="card-body">
+            <!-- <div id="countryAverageChart"  class="col-lg-10">
+                        <canvas id="countryAverageChart"></canvas>
+                      </div> -->
+
+            <div id="" class="col-lg-12">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mt-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Average Scores by Department</h4>
+          </div>
+          <div class="card-body">
+            <!-- <div id="countryAverageChart"  class="col-lg-10">
+                        <canvas id="countryAverageChart"></canvas>
+                      </div> -->
+            <div class="col-lg-10">
+
+              <div class="Table table-Responsive">
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Rank</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Score</th>
+                      <th scope="col">Percentage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <!-- <ng-template *ngFor="let data of departmentDatasets  | sortBy:'desc':'Department_Count'; let i = index" > -->
+                    <tr *ngFor="let data of departmentDatasets  | sortBy:'desc':'Department_Count'; let i = index"
+                      [ngClass]="{'table-success':data.Country_Colour === '#00b050','table-danger':data.Country_Colour === '#ff0000'}">
+
+                      <th scope="row">{{i+1}}</th>
+                      <td>{{data.DepartmentName}}</td>
+                      <td>{{data.Department_Count}}</td>
+                      <td>{{data.Department_Count / 5*100 | number}}%</td>
+                    </tr>
+                    <!-- </ng-template> -->
+                  </tbody>
+
+                </table>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mt-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Average Scores by Dimension</h4>
+          </div>
+          <div class="card-body">
+            <!-- <div id="countryAverageChart"  class="col-lg-10">
+                        <canvas id="countryAverageChart"></canvas>
+                      </div> -->
+            <div class="col-lg-9">
+
+              <div class="Table table-Responsive">
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Rank</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Score</th>
+                      <th scope="col">Percentage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <!-- <ng-template *ngFor="let data of departmentDatasets  | sortBy:'desc':'Department_Count'; let i = index" > -->
+                    <tr *ngFor="let data of dimensionData  | sortBy:'desc':'avg_answer'; let i = index"
+                      [ngClass]="{'table-success':data.BarColours === '#00b050','table-danger':data.BarColours === '#ff0000'}">
+
+                      <th scope="row">{{i+1}}</th>
+                      <td>{{data.DimensionName}}</td>
+                      <td>{{data.avg_answer}}</td>
+                      <td>{{data.avg_percent}}%</td>
+                    </tr>
+                    <!-- </ng-template> -->
+                  </tbody>
+
+                </table>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="mt-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Average Scores by Dimension</h4>
+          </div>
+          <div class="card-body">
+
+            <div *ngFor="let data of avgDimChartData; let i = index">
+              <h4 class="text-center">{{ labelsDepartments[i] }}</h4>
+              <div class="card">
+                <div class="card-body">
+                  <div class="chart-wrapper" class="col-lg-12">
+                    <canvas #avgDimChart></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      
+      
+  </section> -->
+  <section class="mt-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Average Scores by Dimension Per Department</h4>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let data of avgDimChartData; let i = index">
+              <h4 class="text-center">{{ labelsDepartments[i] }}</h4>
+              <div class="card">
+                <div class="card-body">
+                  <div class="chart-wrapper" class="col-lg-12">
+                    <canvas #avgDimChart></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+            </div>
+
+        </div>
+      </div>
+    </section>
+  <!--ADD_PAGE-->
+  <section class="mt-5" style="page-break-before: always;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Average Scores by Question</h4>
+          </div>
+          <div class="card-body">
+            <!-- <div id="countryAverageChart"  class="col-lg-10">
+                        <canvas id="countryAverageChart"></canvas>
+                      </div> -->
+
+            <div id="" class="col-lg-12">
+              <canvas id="averageQuestionChart" height="900" style="padding-right:100px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mt-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Percentage Chart By Question {{CountryName}}</h4>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="chart-wrapper" class="col-lg-12">
+                <canvas id="percentageChart"> </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mt-5" style="page-break-before: always;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Ignore Section</h4>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="chart-wrapper" class="col-lg-12">
+                <!-- <canvas id="percentageChart"> </canvas> -->
+                <canvas id="emptyChart"> </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
