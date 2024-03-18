@@ -360,7 +360,7 @@ roleEngagement_DataOld: ChartData;
               align: "end",
               formatter: (x: number, ctx: Context) => {
                 var x = (x / this.employeeCount) * 100;
-                return x.toFixed(1) + "%\n";
+                return x.toFixed(AppConfig.decPlaces) + "%\n";
               },
               //formatter: (x: number, ctx: Context) => {var y=x;x=(x/this.employeeCount)*100;return x.toFixed(1) + '%\n  '+y;},
             },
@@ -437,7 +437,7 @@ roleEngagement_DataOld: ChartData;
               align: "end",
               formatter: (x: number, ctx: Context) => {
                 var x = (x / this.responseCount) * 100;
-                return x.toFixed(1) + "%\n";
+                return x.toFixed(AppConfig.decPlaces) + "%\n";
               },
               
               //formatter: (x: number, ctx: Context) => {var y=x;x=(x/this.responseCount)*100;return x.toFixed(1) + '%\n  '+y;},
@@ -485,7 +485,7 @@ roleEngagement_DataOld: ChartData;
 
   refreshEngagementRoleChart(): void {
     var dataOldR= this.dataOldRole;
-		var dataOld= dataOldR.map(x => parseFloat(x.score.toFixed(1)));
+		var dataOld= dataOldR.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces)));
     var labels: string[] = this.resultsByRole
       .filter(function (x) {return x.responder_count > 0;})
       .map((x) => x.group["role_name"]);
@@ -493,7 +493,7 @@ roleEngagement_DataOld: ChartData;
     var data: number[] = this.resultsByRole
       .filter(function (x) {return x.responder_count > 0;})
       .map((x) => {
-        const digitdecimal = x["score_avg_percent"].toFixed(1);
+        const digitdecimal = x["score_avg_percent"].toFixed(AppConfig.decPlaces); ///check if should be fixed
         return parseFloat(digitdecimal);
       });
 
@@ -656,7 +656,7 @@ roleEngagement_DataOld: ChartData;
               return x;
             } else {
               if (ctx.datasetIndex === 1) {
-                return x.toFixed(1);
+                return x.toFixed(AppConfig.decPlaces);
               } else {
                 return "";
               }
@@ -741,7 +741,7 @@ roleEngagement_DataOld: ChartData;
       console.log(data);
 
       this.role_data = data[this.currentRole].map((x) => {
-        const digitdecimal = ((x["score_avg"] * 100) / 5).toFixed(1);
+        const digitdecimal = ((x["score_avg"] * 100) / 5).toFixed(AppConfig.decPlaces); ///check if should eb fixed
         return parseFloat(digitdecimal);
       });
     }
@@ -752,7 +752,7 @@ roleEngagement_DataOld: ChartData;
       var data: any[] = this.resultByQuestion.map((x) => x);
       console.log(data);
       this.questionScoreByRole = data[this.currentRole].map((x) => {
-        const digitdecimal = ((x["score_avg"] * 100) / 5).toFixed(1);
+        const digitdecimal = ((x["score_avg"] * 100) / 5).toFixed(AppConfig.decPlaces); ///check
         return parseFloat(digitdecimal);
       });
       this.scoreByQuestionLabels = data[this.currentRole].map((x) => "Q" + x["question_id"]);

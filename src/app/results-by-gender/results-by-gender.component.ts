@@ -280,7 +280,7 @@ export class ResultsByGenderComponent implements OnInit {
 							align: "end",
 							formatter: (x: number, ctx: Context) => {
 								var x=((x/this.employeeCount)*100);
-								return x.toFixed(1) + '%\n';
+								return x.toFixed(AppConfig.decPlaces) + '%\n';
 							},
 							//formatter: (x: number, ctx: Context) => {var y=x;x=(x/this.employeeCount)*100;return x.toFixed(1) + '%\n  '+y;},
 						},
@@ -356,7 +356,7 @@ export class ResultsByGenderComponent implements OnInit {
 							align: "end",							
 							formatter: (x: number, ctx: Context) => {
 								var x=((x/this.responseCount)*100);
-								return x.toFixed(1) + '%\n';
+								return x.toFixed(AppConfig.decPlaces) + '%\n';
 							},
 							offset: 3,
 							display: 'display',
@@ -406,7 +406,7 @@ export class ResultsByGenderComponent implements OnInit {
 		
 		var labels: string[] = this.GenderList;
 		var data: number[] = this.resultsByGender.map(x => {
-			const digitdecimal =  x['score_avg_percent'].toFixed(1); 
+			const digitdecimal =  x['score_avg_percent'].toFixed(AppConfig.decPlaces); 
 			return parseFloat(digitdecimal);
 		});
 		
@@ -606,7 +606,7 @@ export class ResultsByGenderComponent implements OnInit {
 			this.dimension_labels = this.dimensionList.map(x => x['dimension_name']);
 			console.log(this.dimension_labels);
 			
-			this.gender_data = data[this.currentGender].map(x => {const digitdecimal =  (x['score_avg']*100/5).toFixed(1); return parseFloat(digitdecimal);});
+			this.gender_data = data[this.currentGender].map(x => {const digitdecimal =  (x['score_avg']*100/5).toFixed(AppConfig.decPlaces); return parseFloat(digitdecimal);});
 			console.log(this.gender_data);
 		}
 	}
@@ -615,7 +615,7 @@ export class ResultsByGenderComponent implements OnInit {
 		if(this.currentGender != null){
 			var data: any[]  = this.resultByQuestion.map(x => x);
 			console.log(data);
-			this.questionScoreByGender = data[this.currentGender].map(x => {const digitdecimal =  (x['score_avg']*100/5).toFixed(1); return parseFloat(digitdecimal);});
+			this.questionScoreByGender = data[this.currentGender].map(x => {const digitdecimal =  (x['score_avg']*100/5).toFixed(AppConfig.decPlaces); return parseFloat(digitdecimal);});   ////check if should be fixed
 			this.scoreByQuestionLabels = data[this.currentGender].map(x => 'Q' + x['question_id']);
 			console.log(this.questionScoreByGender);
 			console.log(this.scoreByQuestionLabels);

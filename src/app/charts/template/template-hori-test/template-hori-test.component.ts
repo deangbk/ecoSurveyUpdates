@@ -95,7 +95,7 @@ export class TemplateHoriTestComponent implements OnInit, OnChanges, AfterViewIn
 				datalabels: {
 					anchor: "end",
 					align: "end",
-					formatter: (x: number, ctx: Context) => x.toFixed(1) + '%',
+					formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 				},
 			},
 			legend: {

@@ -347,7 +347,7 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 						title: {
 							anchor: "end",
 							align: "end",
-							formatter: (x: number, ctx: Context) => {var x=((x/this.employeeCount)*100);return x.toFixed(1) + '%\n';},
+							formatter: (x: number, ctx: Context) => {var x=((x/this.employeeCount)*100);return x.toFixed(AppConfig.decPlaces) + '%\n';},
 							//formatter: (x: number, ctx: Context) => {var y=x;x=(x/this.employeeCount)*100;return x.toFixed(1) + '%\n  '+y;},
 						},
 						value: {
@@ -419,7 +419,7 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 						title: {
 							anchor: "end",
 							align: "end",
-							formatter: (x: number, ctx: Context) => {var x=((x/this.responseCount)*100);return x.toFixed(1) + '%\n';},
+							formatter: (x: number, ctx: Context) => {var x=((x/this.responseCount)*100);return x.toFixed(AppConfig.decPlaces) + '%\n';},
 						},
 						value: {
 							//color: this.genearationColors,
@@ -464,7 +464,7 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 	refreshEngagementYearOfServiceChart():void {
 		
 		var labels:string[] = this.ByRangeYearOfService_labels_scale.map((x:any) => {return x.split(';')});
-		var data: number[] = this.resultsByYearOfService.filter(function (x){return x.responder_count > 0}).map(x => {if((x['responder_count'] > 0)){const digitdecimal =  x['score_avg_percent'].toFixed(1); return parseFloat(digitdecimal);}});
+		var data: number[] = this.resultsByYearOfService.filter(function (x){return x.responder_count > 0}).map(x => {if((x['responder_count'] > 0)){const digitdecimal =  x['score_avg_percent'].toFixed(AppConfig.decPlaces); return parseFloat(digitdecimal);}}); ///check if fixed
 		///next set the labels to wrap to the next line at 10 characters
 		var textLen = this.ByRangeYearOfService_labels.length >= 4 ? 10 : (128 / this.ByRangeYearOfService_labels.length);
 		var labelsWrap = this.ByRangeYearOfService_labels.map(x => Helpers.wrapText(x, textLen));
@@ -538,7 +538,7 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 			var data: any[] = this.resultsByDimension.map(x => x);
 		//	console.log(data);
 			this.dimension_labels = this.dimensionList.map(x => x['dimension_name']);
-			this.YearOfService_data = data.map(x => {const digitdecimal =  (x[this.currentYearOfService].score_avg*100/5).toFixed(1); return parseFloat(digitdecimal);});
+			this.YearOfService_data = data.map(x => {const digitdecimal =  (x[this.currentYearOfService].score_avg*100/5).toFixed(AppConfig.decPlaces); return parseFloat(digitdecimal);}); ///check
 		//	console.log(this.YearOfService_data);
 		}
 	}
@@ -547,7 +547,7 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 		if(this.currentYearOfService != null){
 			var data: any[]  = this.resultByQuestion.map(x => x);
 			//console.log(data);
-			this.questionScoreByYearOfService = data[this.currentYearOfService].map(x => {const digitdecimal =  (x['score_avg']*100/5).toFixed(1); return parseFloat(digitdecimal);});
+			this.questionScoreByYearOfService = data[this.currentYearOfService].map(x => {const digitdecimal =  (x['score_avg']*100/5).toFixed(AppConfig.decPlaces); return parseFloat(digitdecimal);}); ///check
 			this.scoreByQuestionLabels = data[this.currentYearOfService].map(x => 'Q' + x['question_id']);
 			//console.log(this.questionScoreByYearOfService);
 			//console.log(this.scoreByQuestionLabels);

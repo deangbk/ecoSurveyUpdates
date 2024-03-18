@@ -346,7 +346,7 @@ export class ResultsByAgeComponent implements OnInit {
 						title: {
 							anchor: "end",
 							align: "end",
-							formatter: (x: number, ctx: Context) => {var x=((x/this.employeeCount)*100);return x.toFixed(1) + '%\n';},
+							formatter: (x: number, ctx: Context) => {var x=((x/this.employeeCount)*100);return x.toFixed(AppConfig.decPlaces) + '%\n';},
 						},
 						value: {
 							//color: this.responseColors,
@@ -423,7 +423,7 @@ export class ResultsByAgeComponent implements OnInit {
 						title: {
 							anchor: "end",
 							align: "end",
-							formatter: (x: number, ctx: Context) => {var x=((x/this.responseCount)*100);return x.toFixed(1) + '%\n';},
+							formatter: (x: number, ctx: Context) => {var x=((x/this.responseCount)*100);return x.toFixed(AppConfig.decPlaces) + '%\n';},
 						},
 						value: {
 							//color: this.genearationColors,
@@ -467,7 +467,7 @@ export class ResultsByAgeComponent implements OnInit {
 		var data: number[] = this.resultsByAgeRange
 			.filter(function (x){return x.responder_count > 0})
 				.map(x => {
-					const digitdecimal =  x['score_avg_percent'].toFixed(1);
+					const digitdecimal =  x['score_avg_percent'].toFixed(AppConfig.decPlaces);
 					return parseFloat(digitdecimal);
 				}
 			);
@@ -613,7 +613,7 @@ export class ResultsByAgeComponent implements OnInit {
 			console.log(Obj);
 			this.dimension_labels = this.dimensionList.map(x => x['dimension_name']);
 			this.ageRange_data = Obj.map(x => {
-				const digitdecimal =  (x[this.currentAgeRange].score_avg*100/5).toFixed(1);
+				const digitdecimal =  (x[this.currentAgeRange].score_avg*100/5).toFixed(AppConfig.decPlaces); ////check this again
 				return parseFloat(digitdecimal);
 			});
 			console.log(this.ageRange_data);
@@ -625,7 +625,7 @@ export class ResultsByAgeComponent implements OnInit {
 			var data: any[]  = this.resultByQuestion.map(x => x);
 			console.log(data);
 			this.questionScoreByAgeRange = data[this.currentAgeRange].map(x => {
-				const digitdecimal =  (x['score_avg']*100/5).toFixed(1);
+				const digitdecimal =  (x['score_avg']*100/5).toFixed(AppConfig.decPlaces); ////check this data again also
 				return parseFloat(digitdecimal);
 			});
 			this.scoreByQuestionLabels = data[this.currentAgeRange].map(x => 'Q' + x['question_id']);

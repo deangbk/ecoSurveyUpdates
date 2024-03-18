@@ -61,7 +61,7 @@ export class TemplateVertGroupedComponent implements OnInit, OnChanges, AfterVie
 		//	else
 		//		actualColors = Array(this.data.length).fill(this.colors);
 	//	}
-		
+	//	this.data.datasets[0].data=[] /// add a for loop and send each data set to be rounded
 		this.c_data = this.data;
   //   {
 	// 		labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7'],
@@ -95,7 +95,7 @@ export class TemplateVertGroupedComponent implements OnInit, OnChanges, AfterVie
 				datalabels: {
 					anchor: "end",
 					align: "end",
-					formatter: (x: number, ctx: Context) => x.toFixed(1) + '%',
+					formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 				},
 			},
 			legend: {

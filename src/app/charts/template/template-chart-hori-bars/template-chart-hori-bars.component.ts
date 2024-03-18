@@ -71,7 +71,7 @@ export class TemplateChartHoriBarsComponent implements OnInit, OnChanges, AfterV
 				datalabels: {
 					anchor: "end",
 					align: "end",
-					formatter: (x: number, ctx: Context) => x.toFixed(1) + '%',
+					formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 				},
 			},
 			legend: {

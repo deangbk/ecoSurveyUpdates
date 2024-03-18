@@ -371,7 +371,7 @@ export class ResultsByGenerationComponent implements OnInit {
 							align: "end",
 							formatter: (x: number, ctx: Context) => {
 								var x = ((x / this.employeeCount) * 100);
-								return x.toFixed(1) + '%\n';
+								return x.toFixed(AppConfig.decPlaces) + '%\n';
 							},
 						},
 						value: {
@@ -456,7 +456,7 @@ export class ResultsByGenerationComponent implements OnInit {
 
 							formatter: (x: number, ctx: Context) => {
 								var x=((x/this.responseCount)*100);
-								return x.toFixed(1) + '%\n';
+								return x.toFixed(AppConfig.decPlaces) + '%\n';
 							},
 						},
 						value: {
@@ -498,7 +498,7 @@ export class ResultsByGenerationComponent implements OnInit {
 	
 	refreshEngagementGenerationChart():void {
 		var dataOldGen= this.dataOldGen;
-		var dataOld= dataOldGen.map(x => parseFloat(x.score.toFixed(1)));
+		var dataOld= dataOldGen.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces))); //// check if should be fixed
 		var labels: string[] = this.resultsByGeneration
 			.filter(function (x){return x.responder_count > 0})
 				.map(x => {
@@ -512,7 +512,7 @@ export class ResultsByGenerationComponent implements OnInit {
 			.filter(function (x){return x.responder_count > 0})
 				.map(x => {
 					if((x['responder_count'] > 0)){
-						const digitdecimal =  x['score_avg_percent'].toFixed(1);
+						const digitdecimal =  x['score_avg_percent'].toFixed(AppConfig.decPlaces); ///check if should be fixed
 						return parseFloat(digitdecimal);
 					}
 				}
@@ -672,7 +672,7 @@ export class ResultsByGenerationComponent implements OnInit {
 							return x;
 						}else{
 							if(ctx.datasetIndex===1){
-								return x.toFixed(1);
+								return x.toFixed(AppConfig.decPlaces);
 							}else{
 								return '';
 							}
@@ -749,7 +749,7 @@ export class ResultsByGenerationComponent implements OnInit {
 			console.log(data);
 			this.gen_data = data[this.currentGeneration]
 				.map(x => {
-					const digitdecimal =  (x['score_avg']*100/5).toFixed(1);
+					const digitdecimal =  (x['score_avg']*100/5).toFixed(AppConfig.decPlaces);
 					return parseFloat(digitdecimal);
 				});
 			console.log(this.gen_data);
@@ -761,7 +761,7 @@ export class ResultsByGenerationComponent implements OnInit {
 			var data: any[]  = this.resultByQuestion.map(x => x);
 			console.log(data);
 			this.questionScoreByGeneration = data[this.currentGeneration].map(x => {
-				const digitdecimal =  (x['score_avg']*100/5).toFixed(1);
+				const digitdecimal =  (x['score_avg']*100/5).toFixed(AppConfig.decPlaces); /// check if should be fixed
 				return parseFloat(digitdecimal);
 			});
 			this.scoreByQuestionLabels = data[this.currentGeneration].map(x => 'Q' + x['question_id']);

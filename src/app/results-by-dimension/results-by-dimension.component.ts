@@ -257,7 +257,7 @@ export class ResultsByDimensionComponent implements OnInit {
 				datalabels: {
 					anchor: "end",
 					align: "end",
-					formatter: (x: number, ctx: Context) => x.toFixed(1) + '%',
+					formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 				},
 			},
 			legend: {
@@ -282,7 +282,7 @@ export class ResultsByDimensionComponent implements OnInit {
 						//var label = data.labels[tooltipItem.index];
 						var value: any = data.datasets[tooltipItem.datasetIndex].data;
 						var value2: number = value[tooltipItem.index];
-						return value2.toFixed(1) + '%';
+						return value2.toFixed(AppConfig.decPlaces) + '%';
 					}
 				},
 				
@@ -299,7 +299,7 @@ export class ResultsByDimensionComponent implements OnInit {
 		dataRoles.sort((a, b) => a.role_id - b.role_id);
 		
 		var labels: string[] = dataRoles.map(x => x.role_name);
-		var data: number[] = dataRoles.map(x => parseFloat(x.score_avg_percent.toFixed(1)));
+		var data: number[] = dataRoles.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces)));
 		
 		this.c_labels_scoreByRole = labels;
 		this.c_data_scoreByRole = data;
@@ -309,7 +309,7 @@ export class ResultsByDimensionComponent implements OnInit {
 		dataAges.sort((a, b) => a.generation_id - b.generation_id);
 		
 		var labels: string[] = dataAges.map(x => x.generation_name);
-		var data: number[] = dataAges.map(x => parseFloat(x.score_avg_percent.toFixed(1)));
+		var data: number[] = dataAges.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces))); ///check if should be fixed
 		
 		this.c_labels_scoreByAge = labels;
 		this.c_data_scoreByAge = data;
@@ -318,7 +318,7 @@ export class ResultsByDimensionComponent implements OnInit {
 		var dataDepts = [...this.dataDimension.score_depts];		// Copy
 		
 		var labels: string[] = dataDepts.map(x => x.department_name);
-		var data: number[] = dataDepts.map(x => parseFloat(x.score_avg_percent.toFixed(1)));
+		var data: number[] = dataDepts.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces))); ///check if should be fixed
 		
 		this.c_labels_deptsOverview = labels;
 		this.c_data_deptsOverview = data;
@@ -469,7 +469,7 @@ export class ResultsByDimensionComponent implements OnInit {
 							anchor: "end",
 							align: "end",
 
-							formatter: (x: number, ctx: Context) => {var x=(((x/(countPopulation + countResponse)))*100);return x.toFixed(1) + '%\n';},
+							formatter: (x: number, ctx: Context) => {var x=(((x/(countPopulation + countResponse)))*100);return x.toFixed(AppConfig.decPlaces) + '%\n';},
 							//formatter: (x: number, ctx: Context) => {var y=x;x=(x/this.employeeCount)*100;return x.toFixed(1) + '%\n  '+y;},
 						},
 						value: {
@@ -520,7 +520,7 @@ export class ResultsByDimensionComponent implements OnInit {
 				datalabels: {
 					anchor: "end",
 					align: "end",
-					formatter: (x: number, ctx: Context) => x.toFixed(2) + '%',
+					formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 				},
 			},
 			legend: {

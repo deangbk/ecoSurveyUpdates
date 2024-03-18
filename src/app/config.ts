@@ -5,4 +5,6 @@ export class AppConfig {
 	static donutFontSize= 30;
 	static donutFontSize2= 48;
 	static apiSourceLocal = false;
+
+	static decPlaces = 1  //// determines the decimal places to be used on all charts
 }

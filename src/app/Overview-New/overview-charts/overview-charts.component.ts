@@ -469,7 +469,7 @@ this.c_opt_scorebyDept1 = {
     datalabels: {
       anchor: "end",
       align: "end",
-      formatter: (x: number) => x.toFixed(1) + '%',
+      formatter: (x: number) => x.toFixed(AppConfig.decPlaces) + '%',
     },
   },
   legend: {
@@ -591,7 +591,7 @@ this.c_opt_scorebyDept1 = {
             anchor: "end",
             align: "top",
             formatter: function(value, context) {
-              return (Math.round(value*100)/100).toFixed(1) ;
+              return (value.toFixed(AppConfig.decPlaces));
             }
           },
         },
@@ -656,7 +656,7 @@ this.c_opt_scorebyDept1 = {
             anchor: "end",
             align: "top",
             formatter: function(value, context) {
-              return (Math.round(value)).toFixed(1) + '%'; //`${value}.0 %`;
+              return (value.toFixed(AppConfig.decPlaces)) + '%'; //`${value}.0 %`;
             }
           },
         },
@@ -727,7 +727,7 @@ this.c_opt_scorebyDept1 = {
             anchor: "end",
             align: "top",
             formatter: function(value, context) {
-              return (Math.round(value)).toFixed(1) + '%'; //`${value}.0 %`;
+              return (value.toFixed(AppConfig.decPlaces)) + '%'; //`${value}.0 %`;
             }
           },
         },
@@ -797,7 +797,7 @@ createTotChart():void {
           anchor: "end",
           align: "top",
           formatter: function(value, context) {
-            return Math.round(value).toFixed(1) + '%'; //`${value}.0 %`;
+            return (value.toFixed(AppConfig.decPlaces)) + '%'; //`${value}.0 %`;
           }
         },
       },

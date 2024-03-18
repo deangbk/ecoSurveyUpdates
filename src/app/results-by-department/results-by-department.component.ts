@@ -381,7 +381,7 @@ lable_overview: string;
 		var nonResponseCount = totalPopulation - responseCount;
 		var responseData = [responseCount, nonResponseCount];
 		var responseRate = responseCount / totalPopulation * 100;
-		this.dimComparison.ResponseRate = parseFloat(responseRate.toFixed(1));
+		this.dimComparison.ResponseRate = parseFloat(responseRate.toFixed(AppConfig.decPlaces)); ///check this should it be fixed here
 		this.dimComparison.ResponseTotal = responseCount;
 		this.dimComparison.ResponsePotential = totalPopulation;
 
@@ -407,7 +407,7 @@ lable_overview: string;
 							align: "end",
 							formatter: (x: number, ctx: Context) => {
 								x = (x / totalPopulation) * 100;
-								return x.toFixed(1) + '%';
+								return x.toFixed(AppConfig.decPlaces) + '%';
 							},
 						},
 						value: {
@@ -486,10 +486,10 @@ lable_overview: string;
 			var avgScore: number = this.dataSelectedDepartment.score_avg_percent
 			var datasets: any[] = [3];
 			var OldScores=this.dataOverallOld;
-			var overData=OldScores.map(x => parseFloat(x.score.toFixed(1)));
+			var overData=OldScores.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces))); ///check if should be fixed here
 			var overLabels=OldScores.map(x => x.label);
 			
-			this.dimComparison.DifOverall = parseFloat((avgScore-overData[0]).toFixed(1));
+			this.dimComparison.DifOverall = parseFloat((avgScore-overData[0]).toFixed(AppConfig.decPlaces)); ///check if should be fixed
 			overData.push(avgScore);
 			this.overview_r1=overData[0];
 			this.overview_r2=avgScore;
@@ -541,7 +541,7 @@ lable_overview: string;
 					datalabels: {
 						anchor: "end",
 						align: "end",
-						formatter: (x: number, ctx: Context) => x.toFixed(1) + '%',
+						formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 					},
 				},
 				legend: {
@@ -574,7 +574,7 @@ lable_overview: string;
 		
 		var labels: string[] = dataRoles.map(x => x.role_name);
 		var data: number[] = dataRoles.map(x => x.score_avg_percent);
-		var dataOld: number[] = OldScores.map(x => parseFloat(x.score.toFixed(1)));
+		var dataOld: number[] = OldScores.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces))); ////check if should be fixed here
 		
 		this.c_labels_scoreByRole = labels;
 		this.c_data_scoreByRole = data;
@@ -617,8 +617,8 @@ lable_overview: string;
 		var OldScores=this.dataOldGen;
 		
 		var labels: string[] = dataAges.map(x => x.generation_name);
-		var data: number[] = dataAges.map(x => parseFloat(x.score_avg_percent.toFixed(1)));
-		var dataOld: number[] = OldScores.map(x => parseFloat(x.score.toFixed(1)));
+		var data: number[] = dataAges.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces))); ///check if should be fixed yet
+		var dataOld: number[] = OldScores.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces )));  ///check if should be fixed
 		var idsOld: number[] = OldScores.map(x => x.generation_Id);
 		var mapGenId: number[] = dataAges.map(x => x.generation_id);
 		var oldScoresNewMap: number[] = [];
@@ -680,7 +680,7 @@ lable_overview: string;
 		var dataDims = this.dataSelectedDepartment.score_dimensions;
 		
 		var labels: string[] = dataDims.map(x => x.dimension_name);
-		var data: number[] = dataDims.map(x => parseFloat(x.score_avg_percent.toFixed(1)));
+		var data: number[] = dataDims.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces))); /// check if should be fixed here
 		var textLen = dataDims.length >= 4 ? 6 : (128 / dataDims.length);
 		var labelsWrap = labels.map(x => Helpers.wrapText(x, textLen));
 
@@ -692,7 +692,7 @@ var oldData=this.dataDimOld;
 
 //console.log(labelsWrap);
 //console.log("OldLables");
-var dataYear: number[] = oldData.map(x => parseFloat(x.score.toFixed(1)));
+var dataYear: number[] = oldData.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces))); ///check if should be fixed
 ///needs to be sorted by the original data scores.... not sure how
 this.oldDimensionScores=dataYear;
 /// get max score dimension
@@ -710,7 +710,7 @@ let indexOfMinScore = data.indexOf(minScore);
 	var rst = this.dimDrv.findLargestDifference(data,dataYear);
 	var botRst=this.dimBot.bot3(data);
 	//console.log(rst);
-	this.dimComparison.DimIncrease = parseFloat(rst.largestDifference.toFixed(1));
+	this.dimComparison.DimIncrease = parseFloat(rst.largestDifference.toFixed(AppConfig.decPlaces)); ////check if should be fixed here
 	this.dimComparison.DimInceasedName = labels[rst.largestDifferenceIndex];//labels[rst.largestDifferenceIndex];
 	this.dimComparison.TopDim=labels[indexOfMaxScore];
 	this.dimComparison.TopScore=maxScore;
@@ -720,7 +720,7 @@ let indexOfMinScore = data.indexOf(minScore);
 	this.dimComparison.TopDims=botRst.indicesOfTop3Scores.map(score => labels[score]);
 	this.dimComparison.BotScores=botRst.bottom3Scores;
 	this.dimComparison.TopScores=botRst.top3Scores;
-	this.dimComparison.DimDecrease = parseFloat(rst.largestNegativeDifference.toFixed(1));
+	this.dimComparison.DimDecrease = parseFloat(rst.largestNegativeDifference.toFixed(AppConfig.decPlaces));   ////check if should be fixed here
 	this.dimComparison.DimDecreaseName =rst.largestNegativeDifferenceIndex==-1?"No Negative": labels[rst.largestNegativeDifferenceIndex];
 
 //Creating the data for table
@@ -821,8 +821,8 @@ this.c_data_scorebyDeptDim={
 		this.t_data_scoreDimension = dataDimension.map(x => ({
 			id: x.dimension_id,
 			name: x.dimension_name,
-			score: x.score_avg.toFixed(1),
-			scorep: x.score_avg_percent.toFixed(1) + '%',
+			score: x.score_avg.toFixed(AppConfig.decPlaces),
+			scorep: x.score_avg_percent.toFixed(AppConfig.decPlaces) + '%',
 		}));
 		this.t_data_scoreDimension.sort((a, b) => b.score - a.score);	// Descending sort
 	}
@@ -832,8 +832,8 @@ this.c_data_scorebyDeptDim={
 		var dataSubOld = this.dataSubOld;
 		//console.log("Old sub data "+ dataSubOld);
 		var labels: string[] = dataSubDepts.map(x => x.department_name);
-		var data: number[] = dataSubDepts.map(x => parseFloat(x.score_avg_percent.toFixed(1)));
-		var dataOld: number[] = dataSubOld.map(x => parseFloat(x.score.toFixed(1)));
+		var data: number[] = dataSubDepts.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces))); ///cehck if should be fixed here
+		var dataOld: number[] = dataSubOld.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces)));
 		
 		/*
 		this.c_labels_scorebySubDept = labels;
@@ -862,7 +862,7 @@ this.c_data_scorebyDeptDim={
 				datalabels: {
 					anchor: "end",
 					align: "end",
-					formatter: (x: number, ctx: Context) => x.toFixed(1) + '%',
+					formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 				},
 			},
 			legend: {
@@ -917,7 +917,7 @@ this.c_data_scorebyDeptDim={
 				datalabels: {
 					anchor: "end",
 					align: "end",
-					formatter: (x: number, ctx: Context) => x.toFixed(1) + '%',
+					formatter: (x: number, ctx: Context) => x.toFixed(AppConfig.decPlaces) + '%',
 				},
 			},
 			legend: {
@@ -1150,7 +1150,7 @@ this.c_data_scorebyDeptDim={
 							
 							formatter: (x: number, ctx: Context) => {
 								var x = ((x / totalCount) * 100);
-								return x.toFixed(1) + '%';
+								return x.toFixed(AppConfig.decPlaces) + '%';
 							},
 						},
 						value: {
@@ -1187,7 +1187,7 @@ this.c_data_scorebyDeptDim={
 		var dataDims = this.dataSelectedGeneration.score_dimensions;
 
 		var labels: string[] = dataDims.map(x => x.dimension_name);
-		var data: number[] = dataDims.map(x => parseFloat(x.score_avg_percent.toFixed(1)));
+		var data: number[] = dataDims.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces)));
 		
 		this.c_labels_dimensionsByGenr = labels;
 		this.c_data_dimensionsByGenr = data;
