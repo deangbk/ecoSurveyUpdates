@@ -52,6 +52,8 @@ import { TemplateHoriTestComponent } from './charts/template/template-hori-test/
 import { TemplateVertGroupedComponent } from './charts/template/template-vert-grouped/template-vert-grouped.component';
 import { BottomScores } from './data/dim-difference.service';
 import { DimDifferenceService } from './data/dim-difference.service';
+import { DonutTestComponent } from './charts/donut-test/donut-test.component';
+import { SortTablePipe } from './pipes/sort-table.pipe';
 
 @NgModule({
 	declarations: [
@@ -88,6 +90,8 @@ import { DimDifferenceService } from './data/dim-difference.service';
 		TemplateChartVertiBarsComponent,
 		TemplateHoriTestComponent,
 		TemplateVertGroupedComponent,
+		DonutTestComponent,
+		SortTablePipe,
 	],
 	imports: [
 		BrowserModule,

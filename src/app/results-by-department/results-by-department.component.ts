@@ -181,6 +181,9 @@ lable_overview: string;
 	dataOldGen:Models.OldDataTable[]= null;
 	dataOldRole:Models.OldDataTable[]= null;
 
+
+	dimComparisonTable: Models.DimComparisonItem[] = [];
+
 	///
 	dimComparison: Partial<Models.DimensionComparison> = {};
 	//dimComparison: Models.DimensionComparison;
@@ -260,9 +263,11 @@ lable_overview: string;
 
 		this.dataSrv.getOldDimResultsData(this.surveyId,this.selectedDepartmentId).subscribe(
 			(res: Models.OldDataTable[] ) => {
-				//console.log(res);
+				console.log("old Dimension Data");
+				console.log(res);
 				this.dataError = null;
 				this.dataDimOld = res;
+				console.log(this.dataDimOld);
 			},
 			(err) => {
 				this.dataError = err;
@@ -395,10 +400,24 @@ lable_overview: string;
 						AppConfig.darkishGreen,
 						AppConfig.responseOrange
 					],
-				}
+					hoverBackgroundColor: [
+						AppConfig.darkishGreen,
+						AppConfig.responseOrange
+					],
+					
+					hoverBorderWidth: 0,
+				},
+				
 			],
 		};
 		this.c_opt_responseRate = {
+			rotation:180,
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		 
 			plugins: {
 				datalabels: {
 					labels: {
@@ -421,15 +440,17 @@ lable_overview: string;
 						size: AppConfig.donutFontSize,
 					},
 				},
+			
 				outlabels: {
 					display: false,
 				},
 			},
+			
 			legend: {
 				display: true,
 				position: 'bottom',
 				labels: {
-					padding: 30,
+					padding: 50,
 					fontSize: AppConfig.donutFontSize,
 				}
 			},
@@ -660,7 +681,7 @@ lable_overview: string;
 				//barThickness: 40,
 			},{
 				label: '2023 2nd Round',
-				data:data,// [10, 4, 16,70, 60, 20, 50],//
+				data: data,
 				borderColor:'rgba(255,255,255,1)',
 				backgroundColor:this.c_color_generations,//rgba(0, 109, 177,1)', //
 				//barThickness: 40,
@@ -680,7 +701,7 @@ lable_overview: string;
 		var dataDims = this.dataSelectedDepartment.score_dimensions;
 		
 		var labels: string[] = dataDims.map(x => x.dimension_name);
-		var data: number[] = dataDims.map(x => parseFloat(x.score_avg_percent.toFixed(AppConfig.decPlaces))); /// check if should be fixed here
+		var data: number[] = dataDims.map(x => x.score_avg_percent); /// check if should be fixed here
 		var textLen = dataDims.length >= 4 ? 6 : (128 / dataDims.length);
 		var labelsWrap = labels.map(x => Helpers.wrapText(x, textLen));
 
@@ -689,7 +710,12 @@ lable_overview: string;
 
 ////// get data for multiple datasets chart
 var oldData=this.dataDimOld;
-
+ this.dimComparisonTable=this.dimDrv.createDimTable([...oldData],[...dataDims]);
+ this.dimComparisonTable.sort((a, b) => {
+	if (a.difference === null || a.difference === undefined) return 1;
+	if (b.difference === null || b.difference === undefined) return -1;
+	return b.difference - a.difference;
+  });
 //console.log(labelsWrap);
 //console.log("OldLables");
 var dataYear: number[] = oldData.map(x => parseFloat(x.score.toFixed(AppConfig.decPlaces))); ///check if should be fixed
@@ -707,21 +733,26 @@ let minScore = Math.min.apply(null, data);
 let indexOfMinScore = data.indexOf(minScore);
 
 //// setting values for the table to display
-	var rst = this.dimDrv.findLargestDifference(data,dataYear);
-	var botRst=this.dimBot.bot3(data);
-	//console.log(rst);
-	this.dimComparison.DimIncrease = parseFloat(rst.largestDifference.toFixed(AppConfig.decPlaces)); ////check if should be fixed here
-	this.dimComparison.DimInceasedName = labels[rst.largestDifferenceIndex];//labels[rst.largestDifferenceIndex];
-	this.dimComparison.TopDim=labels[indexOfMaxScore];
-	this.dimComparison.TopScore=maxScore;
-	this.dimComparison.BotDim=labels[indexOfMinScore];
-	this.dimComparison.BotScore=minScore;
-	this.dimComparison.BotDims=botRst.indicesOfBottom3Scores.map(score => labels[score]);
-	this.dimComparison.TopDims=botRst.indicesOfTop3Scores.map(score => labels[score]);
-	this.dimComparison.BotScores=botRst.bottom3Scores;
-	this.dimComparison.TopScores=botRst.top3Scores;
-	this.dimComparison.DimDecrease = parseFloat(rst.largestNegativeDifference.toFixed(AppConfig.decPlaces));   ////check if should be fixed here
-	this.dimComparison.DimDecreaseName =rst.largestNegativeDifferenceIndex==-1?"No Negative": labels[rst.largestNegativeDifferenceIndex];
+	//var rst = this.dimDrv.findLargestDifference(data,dataYear);
+	//var botRst=this.dimBot.bot3(data);
+	///gets an array of the largest increased scores. If they are equal it will return all.
+var lagerstIncreaseItems=this.dimDrv.findLargestDifferenceNew(this.dimComparisonTable,"max");
+var largestDecreaseItems=this.dimDrv.findLargestDifferenceNew(this.dimComparisonTable,"min");
+var topDims=this.dimDrv.findLargestDifferenceNew(this.dimComparisonTable,"top");
+var botDims=this.dimDrv.findLargestDifferenceNew(this.dimComparisonTable,"bot");
+	/////these can only be used here as the data is fixed, once that happens we can't rely on the data for calculations
+	this.dimComparison.DimIncrease =lagerstIncreaseItems[0].difference ;//parseFloat(rst.largestDifference.toFixed(AppConfig.decPlaces)); ////check if should be fixed here
+	this.dimComparison.DimInceasedName = lagerstIncreaseItems.map(item => item.DimensionName).join(', ');//labels[rst.largestDifferenceIndex];//labels[rst.largestDifferenceIndex];
+	this.dimComparison.TopDim=topDims.map(item => item.DimensionName).join(', ');//labels[indexOfMaxScore];
+	this.dimComparison.TopScore=topDims[0].scoreR2;
+	this.dimComparison.BotDim=botDims.map(item => item.DimensionName).join(', ');//labels[indexOfMinScore];
+	this.dimComparison.BotScore=botDims[0].scoreR2;//minScore;
+	//this.dimComparison.BotDims=botRst.indicesOfBottom3Scores.map(score => labels[score]);
+	this.dimComparison.TopDimItems=this.dimDrv.findTopScores(this.dimComparisonTable);//botRst.indicesOfTop3Scores.map(score => labels[score]);
+	this.dimComparison.BottomDims=this.dimDrv.findBottomScores(this.dimComparisonTable);//botRst.bottom3Scores;
+	//this.dimComparison.TopScores=botRst.top3Scores;
+	this.dimComparison.DimDecrease =largestDecreaseItems[0].difference;// parseFloat(rst.largestNegativeDifference.toFixed(AppConfig.decPlaces));   ////check if should be fixed here
+	this.dimComparison.DimDecreaseName =largestDecreaseItems.map(item => item.DimensionName).join(', ');//rst.largestNegativeDifferenceIndex==-1?"No Negative": labels[rst.largestNegativeDifferenceIndex];
 
 //Creating the data for table
 this.combinedData = data.map((value, index) => ({
@@ -1135,11 +1166,19 @@ this.c_data_scorebyDeptDim={
 					label: 'Response Rate by Generation',
 					data: cdata.map(x => x.count),
 					backgroundColor: ResultsByGenerationComponent.generationColors,
+					hoverBackgroundColor:ResultsByGenerationComponent.generationColors,
+					hoverBorderColor: ResultsByGenerationComponent.generationColors, // Add this line
 					barThickness: 80,
 				}
 			],
 		};
 		this.c_opt_rateByGenr = {
+			rotation:180,
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
 			plugins: {
 				datalabels: {
 					labels: {

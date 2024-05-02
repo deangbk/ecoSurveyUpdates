@@ -146,6 +146,8 @@ export class TemplateVertGroupedComponent implements OnInit, OnChanges, AfterVie
 			layout: {
 				padding: {
 					right: this.padding,
+					top:30,
+					bottom:10,
 				}
 			}
 		

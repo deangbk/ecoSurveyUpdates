@@ -361,6 +361,12 @@ export class ResultsByGenerationComponent implements OnInit {
 			],
 		};
 		this.response_Opt = {
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
 			rotation: 180,
 			plugins: {
 				datalabels: {
@@ -446,6 +452,12 @@ export class ResultsByGenerationComponent implements OnInit {
 			],
 		};
 		this.generationResponse_Opt = {
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
 			rotation: 180,
 			plugins: {
 				datalabels: {
@@ -566,6 +578,14 @@ export class ResultsByGenerationComponent implements OnInit {
 				},
 				
 			},
+			layout: {
+				padding: {
+				 // right: this.padding,
+				 top:30,
+				 bottom:10
+				}
+				
+			  },
 			legend: {
 				display: false,
 			},

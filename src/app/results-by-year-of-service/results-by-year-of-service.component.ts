@@ -341,6 +341,12 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 		};
 		this.response_Opt = {
 			rotation: 120,
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
 			plugins: {
 				datalabels: {
 					labels: {
@@ -412,6 +418,12 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 		};
 		this.YearOfServiceResponse_Opt = {
 			rotation: 100,
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
 			plugins: {
 				datalabels: {
 					labels: {
@@ -493,6 +505,14 @@ export class ResultsByYearOfServiceComponent implements OnInit {
 					},*/
 				},
 			},
+			layout: {
+				padding: {
+				 // right: this.padding,
+				 top:30,
+				 bottom:10
+				}
+				
+			  },
 			legend: {
 				display: false,
 			},

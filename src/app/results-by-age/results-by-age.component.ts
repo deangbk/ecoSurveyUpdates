@@ -340,6 +340,11 @@ export class ResultsByAgeComponent implements OnInit {
 		};
 		this.response_Opt = {
 			rotation: 180,
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],			
 			plugins: {
 				datalabels: {
 					labels: {
@@ -417,6 +422,12 @@ export class ResultsByAgeComponent implements OnInit {
 		};
 		this.AgeRangeResponse_Opt = {
 			rotation: 180,
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+			
 			plugins: {
 				datalabels: {
 					labels: {
@@ -493,6 +504,12 @@ export class ResultsByAgeComponent implements OnInit {
 					},*/
 				},
 			},
+			layout:{
+				padding:{
+					top: 30,
+				}
+			},
+			
 			legend: {
 				display: false,
 			},

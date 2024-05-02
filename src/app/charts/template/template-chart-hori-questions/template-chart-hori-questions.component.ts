@@ -6,6 +6,7 @@ import { Context } from 'chartjs-plugin-datalabels';
 import { Helpers } from "../../../helpers"
 
 import { AppConfig } from '../../../config';
+import {ColorGeneratorsService} from '../../../Services/color-generators.service';
 
 @Component({
 	selector: 'app-template-chart-hori-questions',
@@ -30,7 +31,7 @@ export class TemplateChartHoriQuestionsComponent implements OnInit, OnChanges, A
 	
 	c_canvasSize: string = "1500px";
 	
-	constructor() { }
+	constructor(private colorGen:ColorGeneratorsService) { }
 	
 	ngOnInit(): void {
 	}
@@ -57,7 +58,7 @@ export class TemplateChartHoriQuestionsComponent implements OnInit, OnChanges, A
 			callback: (value: number, index: number, values: any) => value + '%',
 		};
 		
-		this.colors = this.createColor(this.data);
+		this.colors = this.colorGen.generateBarColors(this.data, "normal");
 		this.c_data = {
 			labels: this.labels,
 			datasets: [{

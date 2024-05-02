@@ -14,7 +14,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<r-circle-chart [top-display]="'Response Rate'" 
-					[data]="c_data_responseRate" [options]="c_opt_responseRate">
+					[data]="c_data_responseRate" [options]="c_opt_responseRate" >
 			</r-circle-chart>
 			</div>
 		</div>
@@ -37,11 +37,11 @@
 				<div class="card" id="card-top">
 					<div class="card-body" id="card-top-body">
 						<h4>Average Score by Dimension</h4>
-		
-						<table class="table">
+		<div class="table">
+						<table class="table table-hover">
 							<thead class="thead-dark">
 								<tr>
-									<th scope="col">Type</th>
+									<th scope="col"  style="max-width: 75%; white-space: normal">Type</th>
 									<th scope="col">Score</th>
 									
 								<!-- <th scope="col">Score Percentage</th> -->
@@ -54,13 +54,13 @@
 								</tr>
 									<tr>						
 									
-									<td>Largest Increase: <strong>{{this.dimComparison.DimInceasedName}}</strong></td>
-										<td style="color:green">{{this.dimComparison.DimIncrease}}%</td>
+									<td style="max-width: 75%; white-space: normal">Largest Increase: <strong>{{this.dimComparison.DimInceasedName}}</strong></td>
+										<td style="color:green">{{this.dimComparison.DimIncrease | number:'1.1-1'}}%</td>
 										<td></td>
 									</tr>
 									<tr *ngIf="this.dimComparison.DimDecrease<0">
-									<td>Largest Decrease: <strong>{{this.dimComparison.DimDecreaseName}}</strong></td>
-									<td style="color:red">{{this.dimComparison.DimDecrease}}%</td>
+									<td style="max-width: 75%; white-space: normal">Largest Decrease: <strong>{{this.dimComparison.DimDecreaseName}}</strong></td>
+									<td style="color:red">{{this.dimComparison.DimDecrease | number:'1.1-1'}}%</td>
 									
 								</tr>
 									<tr>						
@@ -70,38 +70,40 @@
 										
 									</tr>
 									<tr>
-										<td style="color:green">Highest Scoring Dimension: <strong>{{this.dimComparison.TopDim}} </strong></td>
-										<td style="color:green">{{this.dimComparison.TopScore}}%</td>
+										<td style="color:green;max-width: 75%; white-space: normal">Highest Scoring Dimension: <strong>{{this.dimComparison.TopDim}} </strong></td>
+										<td style="color:green">{{this.dimComparison.TopScore | number:'1.1-1'}}%</td>
 										
 									</tr>
 									<tr>
-										<td style="color:red">Lowest Scoring Dimension: <strong>{{this.dimComparison.BotDim}} </strong></td>
-										<td style="color:red">{{this.dimComparison.BotScore}}%</td>
+										<td style="color:red;max-width: 75%; white-space: normal">Lowest Scoring Dimension: <strong>{{this.dimComparison.BotDim}} </strong></td>
+										<td style="color:red">{{this.dimComparison.BotScore | number:'1.1-1'}}%</td>
 									
 									</tr>
 									<tr>
 										<td><strong>Bottom 3 Dimensions</strong></td>
 									</tr>
-								<tr *ngFor="let item of this.dimComparison.BotDims; let i = index">
-									<td>{{i+1}}. {{item}}</td>
-									<td>{{this.dimComparison.BotScores[i]}}%</td>
+								<tr *ngFor="let item of this.dimComparison.BottomDims; let i = index">
+									<td>{{item.rank}}. {{item.DimensionName}}</td>
+									<td>{{item.scoreR2 | number:'1.1-1'}}%</td>
 									<td></td>
 									</tr>
 									<tr>
 										<td><strong>Top 3 Dimensions</strong></td>
 									</tr>
-								<tr *ngFor="let item of this.dimComparison.TopDims; let i = index">
-									<td>{{i+1}}. {{item}}</td>
-									<td>{{this.dimComparison.TopScores[i]}}%</td>
+								<tr *ngFor="let item of this.dimComparison.TopDimItems; let i = index">
+									<td>{{item.rank}}. {{item.DimensionName}}</td>
+									<td>{{item.scoreR2 | number:'1.1-1'}}%</td>
 									<td></td>
 									</tr>
 							</tbody>
 						</table>
 						</div>
 						</div>
+						</div>
 			</div>
 			
 			<div class="col-lg-7">
+				<h2>Highest Difference:</h2>
 				<div class="card" id="card-top">
 					<div class="card-body" id="card-top-body">
 						<h4>Average Score by Dimension (Table)</h4>
@@ -118,22 +120,66 @@
 								</tr>
 							</thead>
 							<tbody>
-								<ng-container *ngFor="let dt of this.combinedData let i = index">
+								<!-- <ng-container *ngFor="let dt of this.combinedData let i = index">
 									<tr
 										[ngClass]="i == 0 ? 'table-success' : (i == this.combinedData.length - 1 ? 'table-danger' : '')">
 										<th scope="row">{{i + 1}}</th>
 										<td>{{dt.label}}</td>
 										<td>{{dt.data}}%</td>
 									<td>{{dt.dataYear}}%</td> 	
-										<td [ngStyle]="{'color': (dt.data-dt.dataYear) < 0 ? 'red' : 'green'}">{{dt.data-dt.dataYear |  number: '1.2-2' }}%</td>
+										<td [ngStyle]="{'color': (dt.data-dt.dataYear) < 0 ? 'red' : 'green'}">{{dt.data-dt.dataYear |  number: '1.1-2' }}%</td>
 									</tr>
-								</ng-container>
+								</ng-container> -->
+								<ng-container *ngFor="let dc of this.dimComparisonTable | sortTable:'Difference'; let ix = index">
+									<tr
+										[ngClass]="ix == 0 ? 'table-success' : (ix == this.dimComparisonTable.length - 1 ? 'table-danger' : '')">
+										<th scope="row">{{ix + 1}}</th>
+										<td>{{dc.DimensionName}}</td>
+										<td>{{dc.scoreR2 | number:'1.1-1' }}%</td>
+									<td>{{dc.scoreR1 | number:'1.1-1'}}%</td> 	
+										<td [ngStyle]="{'color': (dc.difference) < 0 ? 'red' : 'green'}">{{dc.difference | number:'1.1-1'}}%</td>
+									</tr>
+								</ng-container> 
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
+			
+			
 		</div>
+		<!-- <div class="col-lg-7">
+				<div class="card" id="card-top">
+					<div class="card-body" id="card-top-body">
+						<h4>Average Score by Dimension (Table)</h4>
+		
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Rank #</th>
+									<th scope="col">Dimension</th>
+									
+									<th scope="col">Score Percentage R2</th>
+									<th scope="col">Score R1</th>
+									<th>Difference</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ng-container *ngFor="let dc of this.dimComparisonTable let ix = index">
+									<tr
+										[ngClass]="ix == 0 ? 'table-success' : (ix == this.dimComparisonTable.length - 1 ? 'table-danger' : '')">
+										<th scope="row">{{ix + 1}}</th>
+										<td>{{dc.DimensionName}}</td>
+										<td>{{dc.scoreR2}}%</td>
+									<td>{{dc.scoreR1}}%</td> 	
+										<td [ngStyle]="{'color': (dc.difference) < 0 ? 'red' : 'green'}">{{dc.difference }}%</td>
+									</tr>
+								</ng-container> 
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div> -->
 
 		<div class="row">
 			<div class="col-lg-12">
@@ -153,7 +199,7 @@
 				</rtemplate-chart-verti-bars>
 			</div>
 			<div class="col-lg-12">
-				<app-template-vert-grouped  [title]="'Score by Generation Old Data'" [size]="64"
+				<app-template-vert-grouped [title]="'Score by Generation Old Data'" [size]="64"
 					[labels]="c_labels_scoreByAge" [data]="c_data_scorebyAgeOld"
 					[colors]="c_color_generations">
 				</app-template-vert-grouped>
@@ -190,7 +236,7 @@
 			</div>
 		</div>
 		
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-lg-12">
 				<div class="card" id="card-top">
 					<div class="card-body" id="card-top-body">
@@ -214,7 +260,7 @@
 										<td>{{data.name}}</td>
 										<td>{{data.score}}</td>
 										<td>{{data.scorep}}</td>
-										<!--<td>{{dataDimOld[i]["score"]}}</td> -->
+									
 									</tr>
 								</ng-container>
 							</tbody>
@@ -222,8 +268,8 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
+		</div> -->
+		<!-- <div class="row">
 			<div class="col-lg-12">
 				<div class="card" id="card-top">
 					<div class="card-body" id="card-top-body">
@@ -248,7 +294,7 @@
 										<td>{{dt.label}}</td>
 										<td>{{dt.data}}%</td>
 									<td>{{dt.dataYear}}%</td> 	
-										<td [ngStyle]="{'color': (dt.data-dt.dataYear) < 0 ? 'red' : 'green'}">{{dt.data-dt.dataYear |  number: '1.2-2' }}%</td>
+										<td [ngStyle]="{'color': (dt.data-dt.dataYear) < 0 ? 'red' : 'green'}">{{dt.data-dt.dataYear |  number: '1.1-2' }}%</td>
 									</tr>
 								</ng-container>
 							</tbody>
@@ -256,7 +302,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</ng-container>
 	
 	<br><br>

@@ -3,6 +3,7 @@ import { Component, OnInit, OnChanges, Input, AfterViewInit, ViewChild } from '@
 import { ChartData, ChartOptions } from "chart.js";
 
 import { Helpers } from "../../../helpers"
+import {ColorGeneratorsService} from '../../../Services/color-generators.service';
 
 @Component({
 	selector: 'rtemplate-chart-score-mode',
@@ -19,7 +20,7 @@ export class TemplateChartScoreModeComponent implements OnInit, OnChanges, After
 	c_data: ChartData;
 	c_opt: ChartOptions;
 	
-	constructor() { }
+	constructor(private colorGen:ColorGeneratorsService) { }
 	
 	ngOnInit(): void {
 		
@@ -54,7 +55,7 @@ export class TemplateChartScoreModeComponent implements OnInit, OnChanges, After
 			'rgb(16, 224, 16)',
 		];
 		*/
-		var colors = this.createColor(this.data);
+		var colors = this.colorGen.generateBarColors(this.data, "mode");//this.createColor(this.data);
 		
 		this.c_data = {
 			labels: ['1', '2', '3', '4', '5'],

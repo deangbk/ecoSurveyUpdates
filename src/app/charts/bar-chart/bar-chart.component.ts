@@ -15,9 +15,11 @@ export class RBarChartComponent extends BaseChartComponent {
 	
 	constructor() { 
 		super();
+		
 	}
 	
 	public updateChart(): void {
+		
 		//alert("getting to rchart");
 		this.chart?.destroy();
 		this.chart = new Chart(this.chartCtx, {

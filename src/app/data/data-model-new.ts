@@ -43,6 +43,9 @@ export interface OldDataTable {
 	Generation?: number,
 	Role?: number,
 	generation_Id?: number,
+	dim?:number,
+	dimName?:string,
+	yearService?:number,
 };
 export interface DimensionComparison {
 	ResponseRate: number,
@@ -61,7 +64,17 @@ export interface DimensionComparison {
 	TopScores?: number[],
 	TopDims?: string[],
 	BotDims?: string[],
+	BottomDims?:DimComparisonItem[],
+	TopDimItems?:DimComparisonItem[],
 };
+
+export interface DimComparisonItem {
+	DimensionName: string,
+	scoreR2: number,
+	scoreR1: number,
+	difference: number,
+	rank?: number,
+}
 // ---------------------------------------------------------
 
 export interface GetAllDeptsTree extends DepartmentTable {

@@ -1,5 +1,6 @@
 import { TransitiveCompileNgModuleMetadata } from '@angular/compiler';
-import { Helpers } from "../../helpers"
+import { Helpers } from "../../helpers";
+import {ColorGeneratorsService} from '../../Services/color-generators.service';
 import {
   Component,
   OnInit,
@@ -32,7 +33,7 @@ import { AppConfig } from '../../config';
   styleUrls: ['./overview-charts.component.scss']
 })
 export class OverviewChartsComponent implements   OnInit, AfterViewInit {
-  constructor(private dataService: DataService, private newDataService: NewDataService) {} 
+  constructor(private dataService: DataService, private newDataService: NewDataService,private colorGen:ColorGeneratorsService) {} 
   // {
 
   // constructor() { }
@@ -472,6 +473,7 @@ this.c_opt_scorebyDept1 = {
       formatter: (x: number) => x.toFixed(AppConfig.decPlaces) + '%',
     },
   },
+  layout: { padding: { top: 30 } },
   legend: {
     display: false
   },
@@ -493,7 +495,7 @@ this.c_opt_scorebyDept1 = {
   },
 };
 
-       this.dataReady_Dept1Data=true;
+       //this.dataReady_Dept1Data=true;
       }
     );
 
@@ -507,7 +509,7 @@ this.c_opt_scorebyDept1 = {
         {
           barPercentage: 0.5,
           data: item,
-          backgroundColor:this.createColor(item), //'#e8e8ea', //
+          backgroundColor:this.colorGen.generateBarColors(item, "mode"),//this.createColor(item), //'#e8e8ea', //
           label: "Average Score",
         },
       ],

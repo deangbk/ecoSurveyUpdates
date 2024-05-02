@@ -7,11 +7,11 @@ import { BaseChartComponent } from "../base-chart/base-chart.component"
 import "chartjs-plugin-piechart-outlabels"
 
 @Component({
-	selector: 'r-circle-chart',
-	templateUrl: './circle-chart.component.html',
-	styleUrls: ['./circle-chart.component.scss']
+  selector: 'app-donut-test',
+  templateUrl: './donut-test.component.html',
+  styleUrls: ['./donut-test.component.scss']
 })
-export class RCircleChartComponent extends BaseChartComponent {
+export class DonutTestComponent extends BaseChartComponent {
 	//response_Data: ChartData;
 	//response_Opt: ChartOptions;
 	@Input('outlabel') public outlabel = false;
@@ -33,7 +33,7 @@ export class RCircleChartComponent extends BaseChartComponent {
 		},
 		layout: {
 			padding: {
-				top: 100,
+				top: 150,
 				bottom: 50,
 			},
 			

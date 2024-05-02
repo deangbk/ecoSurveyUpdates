@@ -148,6 +148,10 @@ export class OverviewComponent implements OnInit {
 						AppConfig.primaryColour,
 						'rgb(25, 140, 210)'
 					],
+					hoverBackgroundColor: [
+						AppConfig.primaryColour,
+						'rgb(25, 140, 210)'
+					],
 				}
 			],
 		};
@@ -193,7 +197,15 @@ export class OverviewComponent implements OnInit {
 		*/
 		
 		this.response_Opt = {
+			rotation: 90,
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
 			plugins: {
+			
 				datalabels: {
 					labels: {
 						title: {
@@ -230,6 +242,8 @@ export class OverviewComponent implements OnInit {
 				outlabels: {
 					display: false,
 				},
+
+				
 			},
 			legend: {
 				display: true,

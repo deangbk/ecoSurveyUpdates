@@ -98,7 +98,12 @@ export class TemplateChartVertiBarsComponent implements OnInit, OnChanges, After
 			},
 			layout: {
 				padding: {
+					
 					right: this.padding,
+					top: 50,
+					bottom: 50,
+				
+					
 				}
 			}
 		};

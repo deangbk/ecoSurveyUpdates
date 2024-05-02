@@ -6,6 +6,7 @@ import { Context } from 'chartjs-plugin-datalabels';
 import { Helpers } from "../../../helpers"
 
 import { AppConfig } from '../../../config';
+import {ColorGeneratorsService} from '../../../Services/color-generators.service';
 
 @Component({
 	selector: 'rtemplate-chart-hori-bars',
@@ -30,7 +31,7 @@ export class TemplateChartHoriBarsComponent implements OnInit, OnChanges, AfterV
 	c_data: ChartData;
 	c_opt: ChartOptions;
 	
-	constructor() { }
+	constructor(private colorGen:ColorGeneratorsService) { }
 	
 	ngOnInit(): void {
 	}
@@ -48,9 +49,9 @@ export class TemplateChartHoriBarsComponent implements OnInit, OnChanges, AfterV
 		//console.log('rtemplate-chart-hori-bars: ' + this.data);
 		let actualColors: string[];
 		if (this.colors == null)
-			actualColors = this.createColor(this.data);
+			actualColors = this.colorGen.generateBarColors(this.data, "normal");
 		else {
-			actualColors = this.createColor(this.data);
+			actualColors = this.colorGen.generateBarColors(this.data, "normal");
 		
 		//	if (Array.isArray(this.colors))
 		//		actualColors = this.colors;
@@ -115,7 +116,7 @@ export class TemplateChartHoriBarsComponent implements OnInit, OnChanges, AfterV
 			}
 		};
 	}
-	
+	///// this is ignore now, everything must go through a gloabl service
 	createColor(array: number[]) {
 		var barColors = Helpers.generateBarColors(array);
 		

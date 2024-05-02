@@ -267,11 +267,19 @@ export class ResultsByGenderComponent implements OnInit {
 					label: "Response Rate",
 					data: responseData,
 					backgroundColor: this.responseColors,
+					hoverBorderWidth: 0,
 				},
 				
 			],
 		};
 		this.response_Opt = {
+			hover:{
+				mode: null,
+
+			} ,
+			
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
 			plugins: {
 				datalabels: {
 					labels: {
@@ -347,7 +355,12 @@ export class ResultsByGenderComponent implements OnInit {
 			],
 		};
 		this.GenderResponse_Opt = {
-			
+			hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
 			plugins: {
 				datalabels: {
 					labels: {
@@ -430,6 +443,14 @@ export class ResultsByGenderComponent implements OnInit {
 					size: this.fontSize,
 				},*/
 			},
+			layout: {
+				padding: {
+				 // right: this.padding,
+				 top:30,
+				 bottom:10
+				}
+				
+			  },
 			legend: {
 				display: false,
 			},

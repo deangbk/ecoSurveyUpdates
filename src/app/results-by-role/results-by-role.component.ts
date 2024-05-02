@@ -351,6 +351,12 @@ roleEngagement_DataOld: ChartData;
       ],
     };
     this.response_Opt = {
+      hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
       rotation: 180,
       plugins: {
         datalabels: {
@@ -428,6 +434,12 @@ roleEngagement_DataOld: ChartData;
       ],
     };
     this.roleResponse_Opt = {
+      hover:{
+				mode: null,
+
+			} ,
+			events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+		
       rotation: 100,
       plugins: {
         datalabels: {
@@ -503,7 +515,7 @@ roleEngagement_DataOld: ChartData;
       labels: labels,
       datasets: [
         {
-          data: data,
+          data: [100,100,100],//data,
           backgroundColor: this.roleColors,
           barThickness: this.barThick,
         },
@@ -546,6 +558,15 @@ roleEngagement_DataOld: ChartData;
 						size: this.fontSize,
 					},*/
         },
+       
+      },
+      layout: {
+        padding: {
+         // right: this.padding,
+         top:30,
+         bottom:10
+        }
+        
       },
       legend: {
         display: false,
